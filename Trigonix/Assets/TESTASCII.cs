@@ -6,6 +6,7 @@ using System.Text;
 public class TESTASCII : MonoBehaviour
 {
     //https://learn.microsoft.com/en-us/dotnet/api/system.text.encoding.ascii?view=net-7.0
+    //https://www.thonky.com/qr-code-tutorial/format-version-information
     public Encoding ascii = Encoding.ASCII;
     public string StringToEncode = "Oh les patates! I love Les Patates! ð";
 
