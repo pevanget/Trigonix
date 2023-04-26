@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class TextFieldHandler : MonoBehaviour
 {
-    public string stringToEdit = "Hello cruel World";
+    [SerializeField] private string _stringToEdit = "Hello cruel World";
 
     void OnGUI()
     {
         // Make a text field that modifies stringToEdit.
-        stringToEdit = GUI.TextField(new Rect(10, 10, 200, 50), stringToEdit, 1556);
+        _stringToEdit = GUI.TextField(new Rect(10, 10, 200, 50), _stringToEdit, 1556);
     }
 
 
@@ -17,4 +17,10 @@ public class TextFieldHandler : MonoBehaviour
     {
 
     }
+
+    public string GetStringToEncode()
+    {
+        return _stringToEdit;
+    }
+
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Events;
 //using System;
 
 public class CodeGenerator : MonoBehaviour
@@ -18,11 +19,13 @@ public class CodeGenerator : MonoBehaviour
     /// </summary>
     public bool StartTestGenerateCode = false;
 
+
     [SerializeField] private GameObject _UINumberOfElements;
     [SerializeField] private GameObject _element;
     [SerializeField] private int _heightOfTriangle;
     [SerializeField] Vector2 _firstElementPosition;
 
+    private TextFieldHandler _textFieldHandler;
     private int[] _numberOfElementsPerLine; //top to bottom
     private Vector2[] _positionsOfElements;
     private float _sizeElementX;
@@ -33,11 +36,15 @@ public class CodeGenerator : MonoBehaviour
     private TMP_Text _UINumberOfElementsText;
     private int _counter = 0;
     private GameObject _parentObject;
-
+    private string _stringToEncode;
+    private TESTASCII _testASCII;
 
     // Start is called before the first frame update
     void Start()
     {
+        _testASCII = FindObjectOfType<TESTASCII>();
+        _textFieldHandler = FindObjectOfType<TextFieldHandler>();
+        GetStringToEncode();
         _UINumberOfElementsText = _UINumberOfElements.GetComponent<TMP_Text>();
         if (_element == null) Debug.LogError("No element found");
         CalculateNumberOfElementsPerLine();
@@ -48,6 +55,15 @@ public class CodeGenerator : MonoBehaviour
 
     }
 
+    public void StartEncode()
+    {
+        GetStringToEncode();
+        if (_testASCII.CheckStringValid(_stringToEncode))
+        {
+            Debug.Log("String is valid. Encoding...");
+        }
+        else return;
+    }
     void CalculateNumberOfElementsPerLine()
     {
         _numberOfElementsPerLine = new int[_heightOfTriangle];
@@ -79,10 +95,10 @@ public class CodeGenerator : MonoBehaviour
         //_currentParent = null;
     }
 
-    public void GetCodePhrase(string stringToEncode)
-    {
+    //public void GetCodePhrase(string stringToEncode)
+    //{
 
-    }
+    //}
     
     private void GenerateFirstElement()
     {
@@ -96,6 +112,7 @@ public class CodeGenerator : MonoBehaviour
         SR.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
     }
 
+    private void GetStringToEncode() => _stringToEncode = _textFieldHandler.GetStringToEncode();
     public void TestGenerateCode()
     {
         _attemptsGenerate++;
@@ -134,3 +151,4 @@ public class CodeGenerator : MonoBehaviour
         }
     }
 }
+    

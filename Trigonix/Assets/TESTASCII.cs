@@ -19,16 +19,15 @@ public class TESTASCII : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _encodedBytes = ascii.GetBytes(StringToEncode);
-        Debug.Log(_encodedBytes);
-        foreach (byte b in _encodedBytes)
-        {
-            //Debug.Log(b + " ");
-        }
-        _decodedBytesASCII = ascii.GetString(_encodedBytes);
-        //Debug.Log("ASCII text: " + _decodedBytesASCII);
-        //StringContainsOnlyASCII(StringToEncode);
-        CheckStringValid(StringToEncode);
+        //_encodedBytes = ascii.GetBytes(StringToEncode);
+        //foreach (byte b in _encodedBytes)
+        //{
+        //    //Debug.Log(b + " ");
+        //}
+        //_decodedBytesASCII = ascii.GetString(_encodedBytes);
+        ////Debug.Log("ASCII text: " + _decodedBytesASCII);
+        ////StringContainsOnlyASCII(StringToEncode);
+        //CheckStringValid(StringToEncode);
 
     }
 
@@ -43,13 +42,12 @@ public class TESTASCII : MonoBehaviour
         }
     }
 
-    private bool CheckStringValid(string stringToCheck)
+    public bool CheckStringValid(string stringToCheck)
     {
         bool IsNotNull = CheckNull(stringToCheck);
         bool IsASCII = CheckStringContainsOnlyASCII(stringToCheck);
         bool IsNotTooBig = CheckSize(stringToCheck);
         bool isValid = (IsASCII && IsNotTooBig && IsNotNull);
-
         if (isValid) Debug.Log("Valid string");
         else Debug.LogWarning("Invalid string");
         return isValid;
@@ -70,12 +68,13 @@ public class TESTASCII : MonoBehaviour
         if (isNotTooBig && isNotEmpty) Debug.Log("String is valid size");
         else if (!isNotTooBig) Debug.LogWarning("String is too big!");
         else if (!isNotEmpty) Debug.LogWarning("String is empty!");
+        else Debug.Log("what's going on");
 
         return (isValidSize);
     }
 
 
-    public bool CheckStringContainsOnlyASCII(string stringToCheck)
+    private bool CheckStringContainsOnlyASCII(string stringToCheck)
     {
         byte[] encodedBytesASCII = ascii.GetBytes(stringToCheck);
         string decodedBytesASCII = ascii.GetString(encodedBytesASCII);
