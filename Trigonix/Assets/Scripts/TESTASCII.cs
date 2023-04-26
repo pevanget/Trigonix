@@ -13,7 +13,7 @@ public class TESTASCII : MonoBehaviour
     private byte[] _encodedBytes;
     private string _decodedBytesASCII;
     public bool CheckValid = false;
-    public int MaxSizeForString = 10;
+    public int _maxSizeForString = 10;
 
 
     // Start is called before the first frame update
@@ -62,7 +62,7 @@ public class TESTASCII : MonoBehaviour
     }
     private bool CheckSize(string stringToCheck)
     {
-        bool isNotTooBig = (stringToCheck.Length <= MaxSizeForString);
+        bool isNotTooBig = (stringToCheck.Length <= _maxSizeForString);
         bool isNotEmpty = (stringToCheck.Length > 0);
         bool isValidSize = (isNotEmpty && isNotTooBig);
         if (isNotTooBig && isNotEmpty) Debug.Log("String is valid size");
@@ -83,4 +83,6 @@ public class TESTASCII : MonoBehaviour
         else Debug.LogWarning("This is not an ASCII only string");
         return (isASCII);
     }
+
+    public void SetMaxSizeForString(int maxSize) => _maxSizeForString = maxSize;
 }

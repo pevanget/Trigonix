@@ -23,6 +23,7 @@ public class CodeGenerator : MonoBehaviour
     [SerializeField] private GameObject _UINumberOfElements;
     [SerializeField] private GameObject _element;
     [SerializeField] private int _heightOfTriangle;
+    [SerializeField] private int _maxNumberOfCharacters;
     [SerializeField] Vector2 _firstElementPosition;
 
     private TextFieldHandler _textFieldHandler;
@@ -49,6 +50,7 @@ public class CodeGenerator : MonoBehaviour
     {
         Initialize();
         _testASCII = FindObjectOfType<TESTASCII>();
+        _testASCII.SetMaxSizeForString(_maxNumberOfCharacters);
         _textFieldHandler = FindObjectOfType<TextFieldHandler>();
         GetStringToEncode();
         _UINumberOfElementsText = _UINumberOfElements.GetComponent<TMP_Text>();
