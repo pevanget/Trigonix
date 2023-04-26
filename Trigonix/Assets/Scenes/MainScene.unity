@@ -855,7 +855,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StringToEncode: "Oh les patates! I love Les Patates! \u03C0"
   CheckValid: 0
-  MaxSizeForString: 50
+  MaxSizeForString: 900
 --- !u!4 &1046729117
 Transform:
   m_ObjectHideFlags: 0

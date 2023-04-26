@@ -26,6 +26,7 @@ public class CodeGenerator : MonoBehaviour
     [SerializeField] Vector2 _firstElementPosition;
 
     private TextFieldHandler _textFieldHandler;
+    private int[] _linesToTotalElements;
     private int[] _numberOfElementsPerLine; //top to bottom
     private Vector2[] _positionsOfElements;
     private float _sizeElementX;
@@ -38,10 +39,15 @@ public class CodeGenerator : MonoBehaviour
     private GameObject _parentObject;
     private string _stringToEncode;
     private TESTASCII _testASCII;
+    private int _numberOfSpecialElements = 0;
+    private int _totalMaxElements = 900;
+    private int _maxLines = 30;
+    private int _linesOfTriangle;
 
     // Start is called before the first frame update
     void Start()
     {
+        Initialize();
         _testASCII = FindObjectOfType<TESTASCII>();
         _textFieldHandler = FindObjectOfType<TextFieldHandler>();
         GetStringToEncode();
@@ -55,6 +61,24 @@ public class CodeGenerator : MonoBehaviour
 
     }
 
+    private void Initialize()
+    {
+        CalculateLinesToTotalElementsMatrix();
+    }
+
+    private void CalculateLinesToTotalElementsMatrix()
+    {
+        _linesToTotalElements = new int[_maxLines];
+
+        for (int i = 0; i < _maxLines; i++)
+        {
+            _linesToTotalElements[i] = (i + 1) * (i + 1);
+            //Debug.Log(_linesToTotalElements[i]);
+        }
+        //Debug.Log(_maxLines);
+        //Debug.Log(_linesToTotalElements[_maxLines - 1]);
+    }
+
     public void StartEncode()
     {
         GetStringToEncode();
@@ -63,6 +87,47 @@ public class CodeGenerator : MonoBehaviour
             Debug.Log("Finished checking string. Encoding...");
         }
         else return;
+
+        int totalElementsNeeded = CalculateNumberOfErrorCorrectionElementsNeeded(_stringToEncode) + _stringToEncode.Length + _numberOfSpecialElements;
+        bool isNotTooLargeCode = CheckNumberOfElements(totalElementsNeeded);
+        if (!isNotTooLargeCode) return;
+        Debug.Log(totalElementsNeeded);
+        _linesOfTriangle = CalculateNumberOfLinesNeeded(totalElementsNeeded);
+        Debug.Log(_linesOfTriangle);
+        ///////////EDW
+        _heightOfTriangle = _linesOfTriangle;
+        ResetCode();
+        TestGenerateCode();
+        ///
+    }
+
+    private int CalculateNumberOfLinesNeeded(int elementsInCode)
+    {
+        //int linesNeeded = 0;
+        for (int i = 0; i < _maxLines; i++)
+        {
+            if (elementsInCode <= _linesToTotalElements[i]) return i+1;
+        }
+        Debug.LogWarning("Something bad happened");
+        return -1;
+    }
+    private bool CheckNumberOfElements(int elementsNeeded)
+    {
+        if (elementsNeeded <= _totalMaxElements)
+        {
+            Debug.Log("Size of Code within limits");
+            return true;
+        }
+        else
+        {
+            Debug.LogWarning("Size of Code is too large. Generate Code Aborted");
+            return false;
+        }
+    }
+
+    private int CalculateNumberOfErrorCorrectionElementsNeeded(string stringToEncode)
+    {
+        return 0;
     }
     void CalculateNumberOfElementsPerLine()
     {
@@ -91,7 +156,7 @@ public class CodeGenerator : MonoBehaviour
 
     private void ResetCode()
     {
-        Destroy(_currentParent);
+        if (_currentParent != null) Destroy(_currentParent);
         //_currentParent = null;
     }
 
@@ -99,7 +164,7 @@ public class CodeGenerator : MonoBehaviour
     //{
 
     //}
-    
+
     private void GenerateFirstElement()
     {
         _positionsOfElements[_counter] = _firstElementPosition;
@@ -151,4 +216,3 @@ public class CodeGenerator : MonoBehaviour
         }
     }
 }
-    
