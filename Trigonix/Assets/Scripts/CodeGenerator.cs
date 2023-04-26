@@ -60,7 +60,7 @@ public class CodeGenerator : MonoBehaviour
         GetStringToEncode();
         if (_testASCII.CheckStringValid(_stringToEncode))
         {
-            Debug.Log("String is valid. Encoding...");
+            Debug.Log("Finished checking string. Encoding...");
         }
         else return;
     }
