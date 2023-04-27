@@ -6,12 +6,12 @@ using System.Text;
 public class ASCIIToElement : MonoBehaviour
 {
     //32 mexri 126
-
-    string a = "kostas";
+    public string a = "a";
     public Encoding ascii = Encoding.ASCII;
     private byte[] _encodedBytes;
     private string _decodedBytesASCII;
     SpriteRenderer SR;
+    public bool check = false;
 
 
     private void Start()
@@ -27,6 +27,16 @@ public class ASCIIToElement : MonoBehaviour
         Debug.Log(SR.color);
     }
 
+    private void Update()
+    {
+        if (check)
+        {
+            check = false;
+            byte[] encodedBytesASCII = ascii.GetBytes(a);
+            SR.color = PaintElement(encodedBytesASCII[0]);
+        }
+    }
+
     public Color PaintElement(byte b)
     {
         
@@ -35,6 +45,7 @@ public class ASCIIToElement : MonoBehaviour
         elementColor.r = RedCalculator(colorInt);
         elementColor.g = GreenCalculator(colorInt);
         elementColor.b = BlueCalculator(colorInt);
+        elementColor.a = 1f;
 
         return elementColor;
     }
@@ -53,13 +64,13 @@ public class ASCIIToElement : MonoBehaviour
     private float GreenCalculator(int val)
     {
         int mod = val % 32 / 4;
-        float greenValue = mod / 8;
+        float greenValue = (float) mod / 8f;
         return greenValue;
     }
     private float RedCalculator(int val)
     {
         int mod = val % 128 / 32;
-        float redValue = mod / 4;
+        float redValue = (float) mod / 4f;
         return redValue;
     }
 
