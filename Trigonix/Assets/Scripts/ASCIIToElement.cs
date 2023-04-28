@@ -6,6 +6,21 @@ using System.Text;
 public class ASCIIToElement : MonoBehaviour
 {
     //32 mexri 126
+    [Header("Blue")]
+    [SerializeField] private int _blueMod = 4;
+    [SerializeField] private int _blueColorDepth = 2;
+    [SerializeField] private int _blueShiftPosition = 0;
+    [Header("Green")]
+    [SerializeField] private int _greenMod = 32;
+    [SerializeField] private int _greenColorDepth = 3;
+    [SerializeField] private int _greenShiftPosition = 2;
+    [Header("Red")]
+    [SerializeField] private int _redMod = 128;
+    [SerializeField] private int _redColorDepth = 2;
+    [SerializeField] private int _redShiftPosition = 5;
+
+    [Header("Misc")]
+
     public string a = "a";
     public Encoding ascii = Encoding.ASCII;
     private byte[] _encodedBytes;
@@ -39,8 +54,8 @@ public class ASCIIToElement : MonoBehaviour
 
     public Color PaintElement(byte b)
     {
-        
-        int colorInt = (int) b;
+
+        int colorInt = (int)b;
         Color elementColor = new Color();
         elementColor.r = RedCalculator(colorInt);
         elementColor.g = GreenCalculator(colorInt);
@@ -52,10 +67,12 @@ public class ASCIIToElement : MonoBehaviour
 
     private float BlueCalculator(int val)
     {
+        int _blueDivToShift = (int)Mathf.Pow(2, _blueShiftPosition);
         Debug.Log(val);
-        int mod = val % 4;
+        int mod = val % _blueMod / _blueDivToShift;
         Debug.Log(mod);
-        float blueValue = (float) mod / 4f;
+        float bluePresets = Mathf.Pow(2, _blueColorDepth);
+        float blueValue = (float)mod / bluePresets;
         Debug.Log(blueValue);
 
         return blueValue;
@@ -63,14 +80,19 @@ public class ASCIIToElement : MonoBehaviour
 
     private float GreenCalculator(int val)
     {
-        int mod = val % 32 / 4;
-        float greenValue = (float) mod / 8f;
+        int _greenDivToShift = (int)Mathf.Pow(2, _greenShiftPosition);
+        int mod = val % _greenMod / _greenDivToShift;
+        float greenPresets = Mathf.Pow(2, _greenColorDepth);
+        float greenValue = (float)mod / greenPresets;
         return greenValue;
     }
     private float RedCalculator(int val)
     {
-        int mod = val % 128 / 32;
-        float redValue = (float) mod / 4f;
+        int _redDivToShift = (int)Mathf.Pow(2, _redShiftPosition);
+
+        int mod = val % _redMod / _redDivToShift;
+        float redPresets = Mathf.Pow(2, _redColorDepth);
+        float redValue = (float)mod / redPresets;
         return redValue;
     }
 
