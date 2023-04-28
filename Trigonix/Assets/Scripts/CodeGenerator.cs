@@ -117,7 +117,7 @@ public class CodeGenerator : MonoBehaviour
     {
         if (elementsNeeded <= _totalMaxElements)
         {
-            Debug.Log("Size of Code within limits");
+            Debug.Log("Size of Code within limits (is this necessary?)");
             return true;
         }
         else
@@ -150,7 +150,7 @@ public class CodeGenerator : MonoBehaviour
         {
             StartTestGenerateCode = false;
             ResetCode();
-            TestGenerateCode();
+             TestGenerateCode();
 
         }
         if (_heightOfTriangle > 30) _heightOfTriangle = 30;
@@ -166,6 +166,11 @@ public class CodeGenerator : MonoBehaviour
     //{
 
     //}
+
+    private void EncodeString(string stringToEncode)
+    {
+        
+    }
 
     private void GenerateFirstElement()
     {

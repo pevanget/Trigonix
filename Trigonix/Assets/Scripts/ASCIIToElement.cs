@@ -7,15 +7,15 @@ public class ASCIIToElement : MonoBehaviour
 {
     //32 mexri 126
     [Header("Blue")]
-    [SerializeField] private int _blueMod = 4;
+    [SerializeField] private int _blueMod = 4; //this should be 0-1
     [SerializeField] private int _blueColorDepth = 2;
     [SerializeField] private int _blueShiftPosition = 0;
     [Header("Green")]
-    [SerializeField] private int _greenMod = 32;
+    [SerializeField] private int _greenMod = 32; //this should be 2-4
     [SerializeField] private int _greenColorDepth = 3;
     [SerializeField] private int _greenShiftPosition = 2;
     [Header("Red")]
-    [SerializeField] private int _redMod = 128;
+    [SerializeField] private int _redMod = 128; //this should be 5-6
     [SerializeField] private int _redColorDepth = 2;
     [SerializeField] private int _redShiftPosition = 5;
 
@@ -37,9 +37,9 @@ public class ASCIIToElement : MonoBehaviour
         //    Debug.Log(b);
         //}
         SR = GetComponent<SpriteRenderer>();
-        Debug.Log(encodedBytesASCII[0]);
+        //Debug.Log(encodedBytesASCII[0]);
         SR.color = PaintElement(encodedBytesASCII[0]);
-        Debug.Log(SR.color);
+        //Debug.Log(SR.color);
     }
 
     private void Update()
@@ -68,12 +68,12 @@ public class ASCIIToElement : MonoBehaviour
     private float BlueCalculator(int val)
     {
         int _blueDivToShift = (int)Mathf.Pow(2, _blueShiftPosition);
-        Debug.Log(val);
+        //Debug.Log(val);
         int mod = val % _blueMod / _blueDivToShift;
-        Debug.Log(mod);
+        //Debug.Log(mod);
         float bluePresets = Mathf.Pow(2, _blueColorDepth);
         float blueValue = (float)mod / bluePresets;
-        Debug.Log(blueValue);
+        //Debug.Log(blueValue);
 
         return blueValue;
     }
