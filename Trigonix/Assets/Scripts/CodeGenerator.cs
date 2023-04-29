@@ -93,9 +93,9 @@ public class CodeGenerator : MonoBehaviour
         int totalElementsNeeded = CalculateNumberOfErrorCorrectionElementsNeeded(_stringToEncode) + _stringToEncode.Length + _numberOfSpecialElements;
         bool isNotTooLargeCode = CheckNumberOfElements(totalElementsNeeded);
         if (!isNotTooLargeCode) return;
-        Debug.Log(totalElementsNeeded);
+        //Debug.Log(totalElementsNeeded);
         _linesOfTriangle = CalculateNumberOfLinesNeeded(totalElementsNeeded);
-        Debug.Log(_linesOfTriangle);
+        //Debug.Log(_linesOfTriangle);
         ///////////EDW
         _heightOfTriangle = _linesOfTriangle;
         ResetCode();
