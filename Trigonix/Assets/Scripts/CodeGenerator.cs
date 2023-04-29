@@ -22,7 +22,7 @@ public class CodeGenerator : MonoBehaviour
 
     [SerializeField] private GameObject _UINumberOfElements;
     [SerializeField] private GameObject _element;
-    [SerializeField] private int _heightOfTriangle;
+    [SerializeField] private int _totalLines;
     [SerializeField] private int _maxNumberOfCharacters;
     [SerializeField] Vector2 _firstElementPosition;
 
@@ -97,7 +97,7 @@ public class CodeGenerator : MonoBehaviour
         _linesOfTriangle = CalculateNumberOfLinesNeeded(totalElementsNeeded);
         //Debug.Log(_linesOfTriangle);
         ///////////EDW
-        _heightOfTriangle = _linesOfTriangle;
+        _totalLines = _linesOfTriangle;
         ResetCode();
         TestGenerateCode();
         ///
@@ -133,9 +133,9 @@ public class CodeGenerator : MonoBehaviour
     }
     void CalculateNumberOfElementsPerLine()
     {
-        _numberOfElementsPerLine = new int[_heightOfTriangle];
+        _numberOfElementsPerLine = new int[_totalLines];
         _totalNumberOfElements = 0;
-        for (int i = 0; i < _heightOfTriangle; i++)
+        for (int i = 0; i < _totalLines; i++)
         {
             _numberOfElementsPerLine[i] = 1 + 2 * i;
             _totalNumberOfElements += _numberOfElementsPerLine[i];
@@ -153,7 +153,7 @@ public class CodeGenerator : MonoBehaviour
              TestGenerateCode();
 
         }
-        if (_heightOfTriangle > 30) _heightOfTriangle = 30;
+        if (_totalLines > 30) _totalLines = 30;
     }
 
     private void ResetCode()
@@ -192,7 +192,7 @@ public class CodeGenerator : MonoBehaviour
         _parentObject = new GameObject("Parent Object no. " + _attemptsGenerate);
         _currentParent = _parentObject;
         _counter = 0;
-        for (int i = 0; i < _heightOfTriangle; i++)
+        for (int i = 0; i < _totalLines; i++)
         {
             for (int j = 0; j < _numberOfElementsPerLine[i]; j++)
             {
