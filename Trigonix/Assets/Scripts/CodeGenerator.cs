@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Events;
+using System.Text;
 //using System;
 
 public class CodeGenerator : MonoBehaviour
@@ -26,6 +27,10 @@ public class CodeGenerator : MonoBehaviour
     [SerializeField] private int _maxNumberOfCharacters;
     [SerializeField] Vector2 _firstElementPosition;
 
+    public Encoding ascii = Encoding.ASCII;
+
+    private byte[] _encodedBytesASCII;
+    private ASCIIToElement _asciiToElement;
     private TextFieldHandler _textFieldHandler;
     private int[] _linesToTotalElements;
     private int[] _numberOfElementsPerLine; //top to bottom
@@ -51,6 +56,7 @@ public class CodeGenerator : MonoBehaviour
         Initialize();
         _testASCII = FindObjectOfType<TESTASCII>();
         _testASCII.SetMaxSizeForString(_maxNumberOfCharacters);
+        _asciiToElement = FindObjectOfType<ASCIIToElement>();
         _textFieldHandler = FindObjectOfType<TextFieldHandler>();
         GetStringToEncode();
         _UINumberOfElementsText = _UINumberOfElements.GetComponent<TMP_Text>();
@@ -98,7 +104,12 @@ public class CodeGenerator : MonoBehaviour
         //Debug.Log(_linesOfTriangle);
         ///////////EDW
         _heightOfTriangle = _linesOfTriangle;
+        CalculateNumberOfElementsPerLine();
+
+        _positionsOfElements = new Vector2[_totalNumberOfElements];
         ResetCode();
+        _encodedBytesASCII = ascii.GetBytes(_stringToEncode);
+
         TestGenerateCode();
         ///
     }
@@ -176,12 +187,13 @@ public class CodeGenerator : MonoBehaviour
     {
         _positionsOfElements[_counter] = _firstElementPosition;
         GameObject firstElement = Instantiate(_element, _firstElementPosition, Quaternion.identity, _parentObject.transform);
-        _counter++;
         SpriteRenderer SR = firstElement.GetComponent<SpriteRenderer>();
         _sizeElementX = SR.bounds.size.x;
         _sizeElementY = SR.bounds.size.y;
         //Debug.Log(_sizeElementX + ", " + _sizeElementY);
-        SR.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+        SR.color = _asciiToElement.PaintElement(_encodedBytesASCII[_counter]);
+        //SR.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+        _counter++;
     }
 
     private void GetStringToEncode() => _stringToEncode = _textFieldHandler.GetStringToEncode();
@@ -203,7 +215,7 @@ public class CodeGenerator : MonoBehaviour
                 }
                 else
                 {
-
+                    Debug.Log(_counter);
                     //Debug.Log((int)((_numberOfElementsPerLine[i]) / 2));
                     //_positionsOfElements[counter].x = (j - ((int)((_numberOfElementsPerLine[i]) / 2))) + _sizeElementX * j / 2;
                     _positionsOfElements[_counter].x = _firstElementPosition.x - i * _sizeElementX / 2 + _sizeElementX * j / 2;
@@ -216,7 +228,17 @@ public class CodeGenerator : MonoBehaviour
                     }
 
                     SpriteRenderer SR = element.GetComponent<SpriteRenderer>();
-                    SR.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+                    if (_counter < _stringToEncode.Length) SR.color = _asciiToElement.PaintElement(_encodedBytesASCII[_counter]);
+                    else SR.color = Color.gray;
+                        //SR.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+
+
+                        _counter++;
+                    if (_counter >= _stringToEncode.Length)
+                    {
+                        Debug.Log("phinished");
+                        
+                    }
 
                 }
             }
