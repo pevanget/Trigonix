@@ -68,12 +68,12 @@ public class ASCIIToElement : MonoBehaviour
     private float BlueCalculator(int val)
     {
         int _blueDivToShift = (int)Mathf.Pow(2, _blueShiftPosition);
-        //Debug.Log(val);
+        Debug.Log(val);
         int mod = val % _blueMod / _blueDivToShift;
-        //Debug.Log(mod);
+        Debug.Log(mod);
         float bluePresets = Mathf.Pow(2, _blueColorDepth);
-        float blueValue = (float)mod / bluePresets;
-        //Debug.Log(blueValue);
+        float blueValue = (float)mod / (bluePresets-1);
+        Debug.Log(blueValue);
 
         return blueValue;
     }
@@ -83,7 +83,7 @@ public class ASCIIToElement : MonoBehaviour
         int _greenDivToShift = (int)Mathf.Pow(2, _greenShiftPosition);
         int mod = val % _greenMod / _greenDivToShift;
         float greenPresets = Mathf.Pow(2, _greenColorDepth);
-        float greenValue = (float)mod / greenPresets;
+        float greenValue = (float)mod / (greenPresets-1);
         return greenValue;
     }
     private float RedCalculator(int val)
@@ -92,7 +92,7 @@ public class ASCIIToElement : MonoBehaviour
 
         int mod = val % _redMod / _redDivToShift;
         float redPresets = Mathf.Pow(2, _redColorDepth);
-        float redValue = (float)mod / redPresets;
+        float redValue = (float)mod / (redPresets-1);
         return redValue;
     }
 
