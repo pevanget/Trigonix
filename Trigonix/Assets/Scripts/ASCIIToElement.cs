@@ -20,7 +20,7 @@ public class ASCIIToElement : MonoBehaviour
     [SerializeField] private int _redShiftPosition = 5;
 
     [Header("Misc")]
-
+    public bool DebugColorValues = false;
     public string a = "a";
     public Encoding ascii = Encoding.ASCII;
     private byte[] _encodedBytes;
@@ -70,10 +70,13 @@ public class ASCIIToElement : MonoBehaviour
         int _blueDivToShift = (int)Mathf.Pow(2, _blueShiftPosition);
         int mod = val % _blueMod / _blueDivToShift;
         float bluePresets = Mathf.Pow(2, _blueColorDepth);
-        float blueValue = (float)mod / (bluePresets-1);
-        //Debug.Log(val);
-        //Debug.Log(mod);
-        //Debug.Log(blueValue);
+        float blueValue = (float)mod / (bluePresets - 1);
+        if (DebugColorValues)
+        {
+            Debug.Log(val);
+            Debug.Log(mod);
+            Debug.Log(blueValue);
+        }
 
         return blueValue;
     }
@@ -83,7 +86,13 @@ public class ASCIIToElement : MonoBehaviour
         int _greenDivToShift = (int)Mathf.Pow(2, _greenShiftPosition);
         int mod = val % _greenMod / _greenDivToShift;
         float greenPresets = Mathf.Pow(2, _greenColorDepth);
-        float greenValue = (float)mod / (greenPresets-1);
+        float greenValue = (float)mod / (greenPresets - 1);
+        if (DebugColorValues)
+        {
+            Debug.Log(val);
+            Debug.Log(mod);
+            Debug.Log(greenValue);
+        }
         return greenValue;
     }
     private float RedCalculator(int val)
@@ -92,8 +101,14 @@ public class ASCIIToElement : MonoBehaviour
 
         int mod = val % _redMod / _redDivToShift;
         float redPresets = Mathf.Pow(2, _redColorDepth);
-        float redValue = (float)mod / (redPresets-1);
-        Debug.Log(redValue);
+        float redValue = (float)mod / (redPresets - 1);
+        if (DebugColorValues)
+        {
+            Debug.Log(val);
+            Debug.Log(mod);
+            Debug.Log(redValue);
+        }
+
         return redValue;
     }
 

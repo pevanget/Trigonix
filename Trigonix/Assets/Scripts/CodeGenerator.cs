@@ -18,8 +18,6 @@ public class CodeGenerator : MonoBehaviour
     /// - reconstruction (vgazw fwtografia, einai "diplwmeno" reconstruct
     /// 
     /// </summary>
-    public bool StartTestGenerateCode = false;
-
 
     [SerializeField] private GameObject _UINumberOfElements;
     [SerializeField] private GameObject _element;
@@ -157,14 +155,14 @@ public class CodeGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (StartTestGenerateCode) //make it UI button
-        {
-            StartTestGenerateCode = false;
-            ResetCode();
-             TestGenerateCode();
+        //if (StartTestGenerateCode) //make it UI button
+        //{
+        //    StartTestGenerateCode = false;
+        //    ResetCode();
+        //     TestGenerateCode();
 
-        }
-        if (_heightOfTriangle > 30) _heightOfTriangle = 30;
+        //}
+        //if (_heightOfTriangle > 30) _heightOfTriangle = 30;
     }
 
     private void ResetCode()
