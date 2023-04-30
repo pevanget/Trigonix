@@ -31,14 +31,14 @@ public class ASCIIToElement : MonoBehaviour
 
     private void Start()
     {
-        byte[] encodedBytesASCII = ascii.GetBytes(a);
+        //byte[] encodedBytesASCII = ascii.GetBytes(a);
         //foreach (byte b in encodedBytesASCII)
         //{
         //    Debug.Log(b);
         //}
         SR = GetComponent<SpriteRenderer>();
         //Debug.Log(encodedBytesASCII[0]);
-        SR.color = PaintElement(encodedBytesASCII[0]);
+        //SR.color = PaintElement(encodedBytesASCII[0]);
         //Debug.Log(SR.color);
     }
 
@@ -68,12 +68,12 @@ public class ASCIIToElement : MonoBehaviour
     private float BlueCalculator(int val)
     {
         int _blueDivToShift = (int)Mathf.Pow(2, _blueShiftPosition);
-        Debug.Log(val);
         int mod = val % _blueMod / _blueDivToShift;
-        Debug.Log(mod);
         float bluePresets = Mathf.Pow(2, _blueColorDepth);
         float blueValue = (float)mod / (bluePresets-1);
-        Debug.Log(blueValue);
+        //Debug.Log(val);
+        //Debug.Log(mod);
+        //Debug.Log(blueValue);
 
         return blueValue;
     }
@@ -93,6 +93,7 @@ public class ASCIIToElement : MonoBehaviour
         int mod = val % _redMod / _redDivToShift;
         float redPresets = Mathf.Pow(2, _redColorDepth);
         float redValue = (float)mod / (redPresets-1);
+        Debug.Log(redValue);
         return redValue;
     }
 
