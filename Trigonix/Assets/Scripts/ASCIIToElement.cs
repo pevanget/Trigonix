@@ -21,36 +21,18 @@ public class ASCIIToElement : MonoBehaviour
 
     [Header("Misc")]
     public bool DebugColorValues = false;
-    public string a = "a";
     public Encoding ascii = Encoding.ASCII;
+
     private byte[] _encodedBytes;
     private string _decodedBytesASCII;
     SpriteRenderer SR;
-    public bool check = false;
-
 
     private void Start()
     {
-        //byte[] encodedBytesASCII = ascii.GetBytes(a);
-        //foreach (byte b in encodedBytesASCII)
-        //{
-        //    Debug.Log(b);
-        //}
         SR = GetComponent<SpriteRenderer>();
-        //Debug.Log(encodedBytesASCII[0]);
-        //SR.color = PaintElement(encodedBytesASCII[0]);
-        //Debug.Log(SR.color);
     }
 
-    private void Update()
-    {
-        if (check)
-        {
-            check = false;
-            byte[] encodedBytesASCII = ascii.GetBytes(a);
-            SR.color = PaintElement(encodedBytesASCII[0]);
-        }
-    }
+    
 
     public Color PaintElement(byte b)
     {

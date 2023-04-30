@@ -213,7 +213,7 @@ public class CodeGenerator : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log(_counter);
+                    //Debug.Log(_counter);
                     //Debug.Log((int)((_numberOfElementsPerLine[i]) / 2));
                     //_positionsOfElements[counter].x = (j - ((int)((_numberOfElementsPerLine[i]) / 2))) + _sizeElementX * j / 2;
                     _positionsOfElements[_counter].x = _firstElementPosition.x - i * _sizeElementX / 2 + _sizeElementX * j / 2;
@@ -234,7 +234,7 @@ public class CodeGenerator : MonoBehaviour
                         _counter++;
                     if (_counter >= _stringToEncode.Length)
                     {
-                        Debug.Log("phinished");
+                        //Debug.Log("phinished");
                         
                     }
 
