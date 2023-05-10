@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Events;
 using System.Text;
+using System;
 //using System;
 
 public class CodeGenerator : MonoBehaviour
@@ -24,6 +25,7 @@ public class CodeGenerator : MonoBehaviour
     [SerializeField] private int _heightOfTriangle;
     [SerializeField] private int _maxNumberOfCharacters;
     [SerializeField] Vector2 _firstElementPosition;
+    [SerializeField] private Button _decodeButton;
 
     public Encoding ascii = Encoding.ASCII;
 
@@ -47,6 +49,7 @@ public class CodeGenerator : MonoBehaviour
     private int _totalMaxElements = 900;
     private int _maxLines = 30;
     private int _linesOfTriangle;
+    private GameObject[] elements;
 
     // Start is called before the first frame update
     void Start()
@@ -63,7 +66,7 @@ public class CodeGenerator : MonoBehaviour
 
         _positionsOfElements = new Vector2[_totalNumberOfElements];
         _UINumberOfElementsText.text = "Total number of elements: " + _totalNumberOfElements;
-        TestGenerateCode();
+        //TestGenerateCode();
 
     }
 
@@ -95,7 +98,7 @@ public class CodeGenerator : MonoBehaviour
         else return;
 
         int totalElementsNeeded = CalculateNumberOfErrorCorrectionElementsNeeded(_stringToEncode) + _stringToEncode.Length + _numberOfSpecialElements;
-        bool isNotTooLargeCode = CheckNumberOfElements(totalElementsNeeded);
+        bool isNotTooLargeCode = CheckNumberOfElements(totalElementsNeeded); //should change, seems unnecessary
         if (!isNotTooLargeCode) return;
         //Debug.Log(totalElementsNeeded);
         _linesOfTriangle = CalculateNumberOfLinesNeeded(totalElementsNeeded);
@@ -109,7 +112,13 @@ public class CodeGenerator : MonoBehaviour
         _encodedBytesASCII = ascii.GetBytes(_stringToEncode);
 
         TestGenerateCode();
+        ActivateDecodeButton();
         ///
+    }
+
+    private void ActivateDecodeButton()
+    {
+        _decodeButton.interactable = true;
     }
 
     private int CalculateNumberOfLinesNeeded(int elementsInCode)
@@ -175,6 +184,27 @@ public class CodeGenerator : MonoBehaviour
     //{
 
     //}
+
+    public Transform[] GetElementsTransforms()
+    {
+        Debug.Log("check an doulevei");
+        if (_currentParent == null)
+        { Debug.LogWarning("No elements were found");
+            return null;
+        }
+        else
+        {
+            Transform[] elemTransf = new Transform[_currentParent.transform.childCount];
+            int count = 0;
+            foreach (Transform child in _currentParent.transform)
+            {
+                elemTransf[count] = child;
+                count++;
+            }
+            return elemTransf;
+        }
+        
+    }
 
     private void EncodeString(string stringToEncode)
     {
