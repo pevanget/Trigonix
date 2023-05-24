@@ -67,7 +67,11 @@ public class CodeGenerator : MonoBehaviour
         _positionsOfElements = new Vector2[_totalNumberOfElements];
         _UINumberOfElementsText.text = "Total number of elements: " + _totalNumberOfElements;
         //TestGenerateCode();
-
+        GameObject firstElement = Instantiate(_element, _firstElementPosition, Quaternion.identity);
+        SpriteRenderer SR = firstElement.GetComponent<SpriteRenderer>();
+        _sizeElementX = SR.bounds.size.x;
+        _sizeElementY = SR.bounds.size.y;
+        Destroy(firstElement);
     }
 
     private void Initialize()
@@ -105,6 +109,7 @@ public class CodeGenerator : MonoBehaviour
         //Debug.Log(_linesOfTriangle);
         ///////////EDW
         _heightOfTriangle = _linesOfTriangle;
+        AdjustCamera(_heightOfTriangle);
         CalculateNumberOfElementsPerLine();
 
         _positionsOfElements = new Vector2[_totalNumberOfElements];
@@ -114,6 +119,41 @@ public class CodeGenerator : MonoBehaviour
         TestGenerateCode();
         ActivateDecodeButton();
         ///
+    }
+
+    private void AdjustCamera(int heightOfTriangle)
+    {
+        AdjustMyCamera adjustMyCamera = FindObjectOfType<AdjustMyCamera>();
+        heightOfTriangle++;
+        if (heightOfTriangle > 9)
+        {
+            adjustMyCamera._myCam.orthographicSize = Mathf.Floor((float) ((float) (heightOfTriangle) / 5f)) * 3 + 1;
+        }
+        else
+        {
+            adjustMyCamera._myCam.orthographicSize = 5;
+        }
+        if (heightOfTriangle > 8)
+        {
+            heightOfTriangle -= 8;
+            heightOfTriangle /= 2;
+            Vector3 positionToMove = new Vector3(0, -heightOfTriangle * _sizeElementY, -10);
+            
+            adjustMyCamera.AdjustCamera(positionToMove);
+            Debug.Log(heightOfTriangle + " " + positionToMove + " " + _sizeElementY);
+        }
+        else
+        {
+            heightOfTriangle = 8 - heightOfTriangle;
+            heightOfTriangle /= 2;
+            Vector3 positionToMove = new Vector3(0, heightOfTriangle * _sizeElementY, -10);
+            
+            adjustMyCamera.AdjustCamera(positionToMove);
+            Debug.Log(heightOfTriangle + " " + positionToMove + " " + _sizeElementY);
+        }
+        
+        
+
     }
 
     private void ActivateDecodeButton()
