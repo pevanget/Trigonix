@@ -22,7 +22,7 @@ public class CodeGenerator : MonoBehaviour
 
     [SerializeField] private GameObject _UINumberOfElements;
     [SerializeField] private GameObject _elementTriangle;
-    [SerializeField] private int _heightOfTriangle;
+    [SerializeField] private int _linesOfTriangle;
     [SerializeField] private int _maxNumberOfCharacters;
     [SerializeField] Vector2 _firstElementPosition;
     [SerializeField] private Button _decodeButton;
@@ -48,13 +48,13 @@ public class CodeGenerator : MonoBehaviour
     private int _numberOfSpecialElements = 0;
     private int _totalMaxElements = 900;
     private int _maxLines = 30;
-    private int _linesOfTriangle;
+    //private int _linesOfTriangle;
     private GameObject[] elements;
 
     // Start is called before the first frame update
     void Start()
     {
-        Initialize();    
+        Initialize();
     }
     private void Initialize()
     {
@@ -105,10 +105,10 @@ public class CodeGenerator : MonoBehaviour
         if (!isNotTooLargeCode) return;
         //Debug.Log(totalElementsNeeded);
         _linesOfTriangle = CalculateNumberOfLinesNeeded(totalElementsNeeded);
-        //Debug.Log(_linesOfTriangle);
+
         ///////////EDW
-        _heightOfTriangle = _linesOfTriangle;
-        AdjustCamera(_heightOfTriangle);
+
+        AdjustCamera(_linesOfTriangle);
         CalculateNumberOfElementsPerLine();
 
         _positionsOfElements = new Vector2[_totalNumberOfElements];
@@ -120,13 +120,13 @@ public class CodeGenerator : MonoBehaviour
         ///
     }
 
-    private void AdjustCamera(int heightOfTriangle)
+    private void AdjustCamera(int heightOfTriangle) //this should happen somewhere else
     {
         AdjustMyCamera adjustMyCamera = FindObjectOfType<AdjustMyCamera>();
         heightOfTriangle++;
         if (heightOfTriangle > 9)
         {
-            adjustMyCamera._myCam.orthographicSize = Mathf.Floor((float) ((float) (heightOfTriangle) / 5f)) * 3 + 1;
+            adjustMyCamera._myCam.orthographicSize = Mathf.Floor((float)((float)(heightOfTriangle) / 5f)) * 3 + 2;
         }
         else
         {
@@ -137,7 +137,7 @@ public class CodeGenerator : MonoBehaviour
             heightOfTriangle -= 8;
             heightOfTriangle /= 2;
             Vector3 positionToMove = new Vector3(0, -heightOfTriangle * _sizeElementY, -10);
-            
+
             adjustMyCamera.AdjustCamera(positionToMove);
             Debug.Log(heightOfTriangle + " " + positionToMove + " " + _sizeElementY);
         }
@@ -146,12 +146,12 @@ public class CodeGenerator : MonoBehaviour
             heightOfTriangle = 8 - heightOfTriangle;
             heightOfTriangle /= 2;
             Vector3 positionToMove = new Vector3(0, heightOfTriangle * _sizeElementY, -10);
-            
+
             adjustMyCamera.AdjustCamera(positionToMove);
             //Debug.Log(heightOfTriangle + " " + positionToMove + " " + _sizeElementY);
         }
-        
-        
+
+
 
     }
 
@@ -162,10 +162,9 @@ public class CodeGenerator : MonoBehaviour
 
     private int CalculateNumberOfLinesNeeded(int elementsInCode)
     {
-        //int linesNeeded = 0;
         for (int i = 0; i < _maxLines; i++)
         {
-            if (elementsInCode <= _linesToTotalElements[i]) return i+1;
+            if (elementsInCode <= _linesToTotalElements[i]) return i + 1;
         }
         Debug.LogWarning("Something bad happened");
         return -1;
@@ -190,9 +189,9 @@ public class CodeGenerator : MonoBehaviour
     }
     void CalculateNumberOfElementsPerLine()
     {
-        _numberOfElementsPerLine = new int[_heightOfTriangle];
+        _numberOfElementsPerLine = new int[_linesOfTriangle];
         _totalNumberOfElements = 0;
-        for (int i = 0; i < _heightOfTriangle; i++)
+        for (int i = 0; i < _linesOfTriangle; i++)
         {
             _numberOfElementsPerLine[i] = 1 + 2 * i;
             _totalNumberOfElements += _numberOfElementsPerLine[i];
@@ -228,7 +227,8 @@ public class CodeGenerator : MonoBehaviour
     {
         Debug.Log("check an doulevei");
         if (_currentParent == null)
-        { Debug.LogWarning("No elements were found");
+        {
+            Debug.LogWarning("No elements were found");
             return null;
         }
         else
@@ -242,12 +242,12 @@ public class CodeGenerator : MonoBehaviour
             }
             return elemTransf;
         }
-        
+
     }
 
     private void EncodeString(string stringToEncode)
     {
-        
+
     }
 
     private void GenerateFirstElement()
@@ -271,7 +271,7 @@ public class CodeGenerator : MonoBehaviour
         _parentObject = new GameObject("Parent Object no. " + _attemptsGenerate);
         _currentParent = _parentObject;
         _counter = 0;
-        for (int i = 0; i < _heightOfTriangle; i++)
+        for (int i = 0; i < _linesOfTriangle; i++)
         {
             for (int j = 0; j < _numberOfElementsPerLine[i]; j++)
             {
@@ -282,9 +282,7 @@ public class CodeGenerator : MonoBehaviour
                 }
                 else
                 {
-                    //Debug.Log(_counter);
-                    //Debug.Log((int)((_numberOfElementsPerLine[i]) / 2));
-                    //_positionsOfElements[counter].x = (j - ((int)((_numberOfElementsPerLine[i]) / 2))) + _sizeElementX * j / 2;
+
                     _positionsOfElements[_counter].x = _firstElementPosition.x - i * _sizeElementX / 2 + _sizeElementX * j / 2;
                     //_positionsOfElements[counter].x = (j - (int)(_numberOfElementsPerLine[i] / 2)) + _sizeElementX * j;
                     _positionsOfElements[_counter].y = _firstElementPosition.y - i * _sizeElementY;
@@ -297,14 +295,12 @@ public class CodeGenerator : MonoBehaviour
                     SpriteRenderer SR = element.GetComponent<SpriteRenderer>();
                     if (_counter < _stringToEncode.Length) SR.color = _asciiToElement.PaintElement(_encodedBytesASCII[_counter]);
                     else SR.color = Color.gray;
-                        //SR.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
 
-
-                        _counter++;
+                    _counter++;
                     if (_counter >= _stringToEncode.Length)
                     {
                         //Debug.Log("phinished");
-                        
+
                     }
 
                 }
