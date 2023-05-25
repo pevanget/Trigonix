@@ -21,7 +21,7 @@ public class CodeGenerator : MonoBehaviour
     /// </summary>
 
     [SerializeField] private GameObject _UINumberOfElements;
-    [SerializeField] private GameObject _element;
+    [SerializeField] private GameObject _elementTriangle;
     [SerializeField] private int _heightOfTriangle;
     [SerializeField] private int _maxNumberOfCharacters;
     [SerializeField] Vector2 _firstElementPosition;
@@ -44,7 +44,7 @@ public class CodeGenerator : MonoBehaviour
     private int _counter = 0;
     private GameObject _parentObject;
     private string _stringToEncode;
-    private TESTASCII _testASCII;
+    private CheckString _checkString;
     private int _numberOfSpecialElements = 0;
     private int _totalMaxElements = 900;
     private int _maxLines = 30;
@@ -54,31 +54,24 @@ public class CodeGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Initialize();
-        _testASCII = FindObjectOfType<TESTASCII>();
-        _testASCII.SetMaxSizeForString(_maxNumberOfCharacters);
-        _asciiToElement = FindObjectOfType<ASCIIToElement>();
-        _textFieldHandler = FindObjectOfType<TextFieldHandler>();
-        GetStringToEncode();
-        _UINumberOfElementsText = _UINumberOfElements.GetComponent<TMP_Text>();
-        if (_element == null) Debug.LogError("No element found");
-        CalculateNumberOfElementsPerLine();
-
-        _positionsOfElements = new Vector2[_totalNumberOfElements];
-        _UINumberOfElementsText.text = "Total number of elements: " + _totalNumberOfElements;
-        //TestGenerateCode();
-        GameObject firstElement = Instantiate(_element, _firstElementPosition, Quaternion.identity);
-        SpriteRenderer SR = firstElement.GetComponent<SpriteRenderer>();
-        _sizeElementX = SR.bounds.size.x;
-        _sizeElementY = SR.bounds.size.y;
-        Destroy(firstElement);
+        Initialize();    
     }
-
     private void Initialize()
     {
         CalculateLinesToTotalElementsMatrix();
-    }
+        CalculateSizeOfElement();
+        _checkString = FindObjectOfType<CheckString>();
+        _checkString.SetMaxSizeForString(_maxNumberOfCharacters);
+        _asciiToElement = FindObjectOfType<ASCIIToElement>();
+        _textFieldHandler = FindObjectOfType<TextFieldHandler>();
+        //GetStringToEncode();
+        _UINumberOfElementsText = _UINumberOfElements.GetComponent<TMP_Text>();
+        if (_elementTriangle == null) Debug.LogError("No element found");
+        //CalculateNumberOfElementsPerLine();
 
+        _positionsOfElements = new Vector2[_totalNumberOfElements];
+        _UINumberOfElementsText.text = "Total number of elements: " + _totalNumberOfElements;
+    }
     private void CalculateLinesToTotalElementsMatrix()
     {
         _linesToTotalElements = new int[_maxLines];
@@ -86,16 +79,22 @@ public class CodeGenerator : MonoBehaviour
         for (int i = 0; i < _maxLines; i++)
         {
             _linesToTotalElements[i] = (i + 1) * (i + 1);
-            //Debug.Log(_linesToTotalElements[i]);
         }
-        //Debug.Log(_maxLines);
-        //Debug.Log(_linesToTotalElements[_maxLines - 1]);
+    }
+
+    private void CalculateSizeOfElement()
+    {
+        GameObject element = Instantiate(_elementTriangle, _firstElementPosition, Quaternion.identity);
+        SpriteRenderer SR = element.GetComponent<SpriteRenderer>();
+        _sizeElementX = SR.bounds.size.x;
+        _sizeElementY = SR.bounds.size.y;
+        Destroy(element);
     }
 
     public void StartEncode()
     {
         GetStringToEncode();
-        if (_testASCII.CheckStringValid(_stringToEncode))
+        if (_checkString.CheckStringValid(_stringToEncode))
         {
             Debug.Log("Finished checking string. Encoding...");
         }
@@ -149,7 +148,7 @@ public class CodeGenerator : MonoBehaviour
             Vector3 positionToMove = new Vector3(0, heightOfTriangle * _sizeElementY, -10);
             
             adjustMyCamera.AdjustCamera(positionToMove);
-            Debug.Log(heightOfTriangle + " " + positionToMove + " " + _sizeElementY);
+            //Debug.Log(heightOfTriangle + " " + positionToMove + " " + _sizeElementY);
         }
         
         
@@ -254,7 +253,7 @@ public class CodeGenerator : MonoBehaviour
     private void GenerateFirstElement()
     {
         _positionsOfElements[_counter] = _firstElementPosition;
-        GameObject firstElement = Instantiate(_element, _firstElementPosition, Quaternion.identity, _parentObject.transform);
+        GameObject firstElement = Instantiate(_elementTriangle, _firstElementPosition, Quaternion.identity, _parentObject.transform);
         SpriteRenderer SR = firstElement.GetComponent<SpriteRenderer>();
         _sizeElementX = SR.bounds.size.x;
         _sizeElementY = SR.bounds.size.y;
@@ -289,7 +288,7 @@ public class CodeGenerator : MonoBehaviour
                     _positionsOfElements[_counter].x = _firstElementPosition.x - i * _sizeElementX / 2 + _sizeElementX * j / 2;
                     //_positionsOfElements[counter].x = (j - (int)(_numberOfElementsPerLine[i] / 2)) + _sizeElementX * j;
                     _positionsOfElements[_counter].y = _firstElementPosition.y - i * _sizeElementY;
-                    GameObject element = Instantiate(_element, _positionsOfElements[_counter], Quaternion.identity, _parentObject.transform);
+                    GameObject element = Instantiate(_elementTriangle, _positionsOfElements[_counter], Quaternion.identity, _parentObject.transform);
                     if (j % 2 == 1)
                     {
                         element.transform.RotateAround(element.transform.position, transform.forward, 180f);

@@ -322,6 +322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4884edbc9d1d9454ea0afae3651b81be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _myCam: {fileID: 0}
 --- !u!1 &594354865
 GameObject:
   m_ObjectHideFlags: 0
@@ -1417,9 +1418,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c07a04f37dd9fbc4d80e6bc0714fa399, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StringToEncode: "Oh les patates! I love Les Patates! \u03C0"
-  CheckValid: 0
-  _maxSizeForString: 10
 --- !u!4 &1046729117
 Transform:
   m_ObjectHideFlags: 0
@@ -1448,7 +1446,7 @@ GameObject:
   - component: {fileID: 1047107291}
   - component: {fileID: 1047107290}
   m_Layer: 0
-  m_Name: Quad
+  m_Name: Screenshot Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1563,7 +1561,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _UINumberOfElements: {fileID: 2019969958}
-  _element: {fileID: 1975518927678028590, guid: 6a5c7814902e4ba48b92b1aa55671470, type: 3}
+  _elementTriangle: {fileID: 1975518927678028590, guid: 6a5c7814902e4ba48b92b1aa55671470, type: 3}
   _heightOfTriangle: 0
   _maxNumberOfCharacters: 900
   _firstElementPosition: {x: 0, y: 4}

@@ -3,44 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
 
-public class TESTASCII : MonoBehaviour
+public class CheckString : MonoBehaviour
 {
     //https://learn.microsoft.com/en-us/dotnet/api/system.text.encoding.ascii?view=net-7.0
     //https://www.thonky.com/qr-code-tutorial/format-version-information
-    public Encoding ascii = Encoding.ASCII;
-    public string StringToEncode = "Oh les patates! I love Les Patates! ð";
-
-    private byte[] _encodedBytes;
-    private string _decodedBytesASCII;
-    public bool CheckValid = false;
-    public int _maxSizeForString = 10;
+    private Encoding _ascii = Encoding.ASCII;
+    private int _maxSizeForString = 10;
+    private bool _debugsOn = false;
+    
+    
 
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        //_encodedBytes = ascii.GetBytes(StringToEncode);
-        //foreach (byte b in _encodedBytes)
-        //{
-        //    //Debug.Log(b + " ");
-        //}
-        //_decodedBytesASCII = ascii.GetString(_encodedBytes);
-        ////Debug.Log("ASCII text: " + _decodedBytesASCII);
-        ////StringContainsOnlyASCII(StringToEncode);
-        //CheckStringValid(StringToEncode);
+    
 
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-        if (CheckValid)
-        {
-            CheckValid = false;
-            CheckStringValid(StringToEncode);
-        }
-    }
+    
 
     public bool CheckStringValid(string stringToCheck)
     {
@@ -48,6 +25,9 @@ public class TESTASCII : MonoBehaviour
         bool IsASCII = CheckStringContainsOnlyASCII(stringToCheck);
         bool IsNotTooBig = CheckSize(stringToCheck);
         bool isValid = (IsASCII && IsNotTooBig && IsNotNull);
+        if (!_debugsOn) return isValid;
+
+        //debugs
         if (isValid) Debug.Log("Valid string");
         else Debug.LogWarning("Invalid string");
         return isValid;
@@ -56,6 +36,9 @@ public class TESTASCII : MonoBehaviour
     private bool CheckNull(string stringToCheck)
     {
         bool notNull = stringToCheck != null;
+        if (!_debugsOn) return notNull;
+
+        //debugs
         if (notNull) Debug.Log("String is not null");
         else Debug.LogWarning("String is null!");
         return notNull;
@@ -65,24 +48,30 @@ public class TESTASCII : MonoBehaviour
         bool isNotTooBig = (stringToCheck.Length <= _maxSizeForString);
         bool isNotEmpty = (stringToCheck.Length > 0);
         bool isValidSize = (isNotEmpty && isNotTooBig);
+        if (!_debugsOn) return isValidSize;
+
+        //debugs
         if (isNotTooBig && isNotEmpty) Debug.Log("String is valid size");
         else if (!isNotTooBig) Debug.LogWarning("String is too big!");
         else if (!isNotEmpty) Debug.LogWarning("String is empty!");
         else Debug.Log("what's going on");
-
-        return (isValidSize);
+        return isValidSize;
     }
 
 
     private bool CheckStringContainsOnlyASCII(string stringToCheck)
     {
-        byte[] encodedBytesASCII = ascii.GetBytes(stringToCheck);
-        string decodedBytesASCII = ascii.GetString(encodedBytesASCII);
+        byte[] encodedBytesASCII = _ascii.GetBytes(stringToCheck);
+        string decodedBytesASCII = _ascii.GetString(encodedBytesASCII);
         bool isASCII = (stringToCheck == decodedBytesASCII);
+        if (!_debugsOn) return (isASCII);
+
+        //debugs
         if (isASCII) Debug.Log("This is an ASCII only string");
         else Debug.LogWarning("This is not an ASCII only string");
         return (isASCII);
     }
 
     public void SetMaxSizeForString(int maxSize) => _maxSizeForString = maxSize;
+    public void SetDebuggers(bool val) => _debugsOn = val;
 }
