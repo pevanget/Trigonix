@@ -1866,7 +1866,7 @@ GameObject:
   - component: {fileID: 1491565847}
   - component: {fileID: 1491565846}
   m_Layer: 0
-  m_Name: test camera
+  m_Name: Quad Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
