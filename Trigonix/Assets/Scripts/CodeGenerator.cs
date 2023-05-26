@@ -108,7 +108,6 @@ public class CodeGenerator : MonoBehaviour
 
         ///////////EDW
         _adjustMyCamera.AdjustCamera(_linesOfTriangle, _sizeElementY);
-        //_adjustMyCamera.AdjustCamera(_linesOfTriangle, _sizeElementY);
         CalculateNumberOfElementsPerLine();
 
         _positionsOfElements = new Vector2[_totalNumberOfElements];
@@ -117,41 +116,10 @@ public class CodeGenerator : MonoBehaviour
 
         Encode();
         ActivateDecodeButton();
-        ///
+
     }
 
-    //private void AdjustCamera(int linesOfTriangle, float sizeElementY) //this should happen somewhere else
-    //{
-    //    linesOfTriangle++; //starts from 0
-    //    //_adjustMyCamera.AdjustCamera();
-    //    if (linesOfTriangle > 9)
-    //    {
-    //        _adjustMyCamera._myCam.orthographicSize = Mathf.Floor((float)((float)(linesOfTriangle) / 5f)) * 3 + 2;
-    //    }
-    //    else
-    //    {
-    //        _adjustMyCamera._myCam.orthographicSize = 5;
-    //    }
-    //    if (linesOfTriangle > 8)
-    //    {
-    //        linesOfTriangle -= 8;
-    //        linesOfTriangle /= 2;
-    //        Vector3 positionToMove = new Vector3(0, -linesOfTriangle * sizeElementY, -10);
-
-    //        _adjustMyCamera.AdjustCamera(positionToMove);
-    //    }
-    //    else
-    //    {
-    //        linesOfTriangle = 8 - linesOfTriangle;
-    //        linesOfTriangle /= 2;
-    //        Vector3 positionToMove = new Vector3(0, linesOfTriangle * sizeElementY, -10);
-
-    //        _adjustMyCamera.AdjustCamera(positionToMove);
-    //    }
-
-
-
-    //}
+    
 
     private void ActivateDecodeButton()
     {
