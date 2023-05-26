@@ -26,12 +26,13 @@ public class CodeGenerator : MonoBehaviour
     [SerializeField] private int _maxNumberOfCharacters;
     [SerializeField] Vector2 _firstElementPosition;
     [SerializeField] private Button _decodeButton;
+    [SerializeField] private ASCIIToElement _asciiToElement;
+    [SerializeField] private TextFieldHandler _textFieldHandler;
+    [SerializeField] private CheckString _checkString;
 
     public Encoding ascii = Encoding.ASCII;
 
     private byte[] _encodedBytesASCII;
-    private ASCIIToElement _asciiToElement;
-    private TextFieldHandler _textFieldHandler;
     private int[] _linesToTotalElements;
     private int[] _numberOfElementsPerLine; //top to bottom
     private Vector2[] _positionsOfElements;
@@ -44,7 +45,6 @@ public class CodeGenerator : MonoBehaviour
     private int _counter = 0;
     private GameObject _parentObject;
     private string _stringToEncode;
-    private CheckString _checkString;
     private int _numberOfSpecialElements = 0;
     private int _totalMaxElements = 900;
     private int _maxLines = 30;
@@ -60,14 +60,10 @@ public class CodeGenerator : MonoBehaviour
     {
         CalculateLinesToTotalElementsMatrix();
         CalculateSizeOfElement();
-        _checkString = FindObjectOfType<CheckString>();
         _checkString.SetMaxSizeForString(_maxNumberOfCharacters);
-        _asciiToElement = FindObjectOfType<ASCIIToElement>();
-        _textFieldHandler = FindObjectOfType<TextFieldHandler>();
-        //GetStringToEncode();
+
         _UINumberOfElementsText = _UINumberOfElements.GetComponent<TMP_Text>();
         if (_elementTriangle == null) Debug.LogError("No element found");
-        //CalculateNumberOfElementsPerLine();
 
         _positionsOfElements = new Vector2[_totalNumberOfElements];
         _UINumberOfElementsText.text = "Total number of elements: " + _totalNumberOfElements;
@@ -96,12 +92,15 @@ public class CodeGenerator : MonoBehaviour
         GetStringToEncode();
         if (_checkString.CheckStringValid(_stringToEncode))
         {
-            Debug.Log("Finished checking string. Encoding...");
+            Debug.Log("Finished checking string.");
         }
-        else return;
-
+        else
+        {
+            Debug.Log("String is invalid.");
+            return;
+        }
         int totalElementsNeeded = CalculateNumberOfErrorCorrectionElementsNeeded(_stringToEncode) + _stringToEncode.Length + _numberOfSpecialElements;
-        bool isNotTooLargeCode = CheckNumberOfElements(totalElementsNeeded); //should change, seems unnecessary
+        bool isNotTooLargeCode = CheckNumberOfElements(totalElementsNeeded);
         if (!isNotTooLargeCode) return;
         //Debug.Log(totalElementsNeeded);
         _linesOfTriangle = CalculateNumberOfLinesNeeded(totalElementsNeeded);
@@ -115,7 +114,7 @@ public class CodeGenerator : MonoBehaviour
         ResetCode();
         _encodedBytesASCII = ascii.GetBytes(_stringToEncode);
 
-        TestGenerateCode();
+        Encode();
         ActivateDecodeButton();
         ///
     }
@@ -139,7 +138,7 @@ public class CodeGenerator : MonoBehaviour
             Vector3 positionToMove = new Vector3(0, -heightOfTriangle * _sizeElementY, -10);
 
             adjustMyCamera.AdjustCamera(positionToMove);
-            Debug.Log(heightOfTriangle + " " + positionToMove + " " + _sizeElementY);
+            //Debug.Log(heightOfTriangle + " " + positionToMove + " " + _sizeElementY);
         }
         else
         {
@@ -178,7 +177,7 @@ public class CodeGenerator : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Size of Code is too large. Generate Code Aborted");
+            Debug.LogWarning("Size of Code is too large. Generate Code Aborted"); //make it ui visible OR check string should do that
             return false;
         }
     }
@@ -199,18 +198,7 @@ public class CodeGenerator : MonoBehaviour
         _UINumberOfElementsText.text = "Total number of elements: " + _totalNumberOfElements;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //if (StartTestGenerateCode) //make it UI button
-        //{
-        //    StartTestGenerateCode = false;
-        //    ResetCode();
-        //     TestGenerateCode();
-
-        //}
-        //if (_heightOfTriangle > 30) _heightOfTriangle = 30;
-    }
+  
 
     private void ResetCode()
     {
@@ -245,10 +233,7 @@ public class CodeGenerator : MonoBehaviour
 
     }
 
-    private void EncodeString(string stringToEncode)
-    {
 
-    }
 
     private void GenerateFirstElement()
     {
@@ -264,7 +249,7 @@ public class CodeGenerator : MonoBehaviour
     }
 
     private void GetStringToEncode() => _stringToEncode = _textFieldHandler.GetStringToEncode();
-    public void TestGenerateCode()
+    public void Encode()
     {
         _attemptsGenerate++;
         CalculateNumberOfElementsPerLine();

@@ -5,17 +5,12 @@ using UnityEngine;
 public class Decoder : MonoBehaviour
 {
     [SerializeField] private CodeGenerator _codeGen;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    private int _redDepth, _greenDepth, _blueDepth;
+    private int _redMultiplier, _greenMultiplier, _blueMultiplier;
+
+
+  
 
     public void StartDecode()
     {
@@ -24,12 +19,10 @@ public class Decoder : MonoBehaviour
         Debug.Log("Starting Decoding");
         Transform[] elements = _codeGen.GetElementsTransforms();
         char[] characters = new char[elements.Length];
-        //Debug.Log(elements.Length);
+
         for (int i = 0; i < elements.Length; i++)
         {
-            characters[i] = DecodeChar(elements[i]);
-            //str = str + seed[i].ToString();
-            
+            characters[i] = DecodeElement(elements[i]);           
         }
         string str = new string(characters);
         Debug.Log(str);
@@ -37,10 +30,10 @@ public class Decoder : MonoBehaviour
 
     }
 
-    private char DecodeChar(Transform el)
+    private char DecodeElement(Transform el)
     {
         SpriteRenderer SR = el.GetComponent<SpriteRenderer>();
-        if (SR == null) return 'e';
+        if (SR == null) return '0';
         else
         {
             return DecodeColor(SR.color);
@@ -49,14 +42,23 @@ public class Decoder : MonoBehaviour
 
     private char DecodeColor(Color col)
     {
-        float red = col.r * 3;
-        float green = col.g * 7;
-        float blue = col.b * 3;
-        float num = red * 32 + green * 4 + blue;
+        float red = col.r * (Mathf.Pow(2,_redDepth)-1);
+        float green = col.g * (Mathf.Pow(2, _greenDepth) - 1);
+        float blue = col.b * (Mathf.Pow(2, _redDepth) - 1);
+        float num = red * _redMultiplier + green * _greenMultiplier + blue * _blueMultiplier;
         int numm = (int)num;
         char myChar;
         myChar = (char)numm;
-        //myChar = Convert.ToChar(numm);
         return myChar;
+    }
+
+    public void SetDepths(int r, int g, int b)
+    {
+        _redDepth = r;
+        _greenDepth = g;
+        _blueDepth = b;
+        _redMultiplier = (int) Mathf.Pow(2, g+b);
+        _greenMultiplier = (int) Mathf.Pow(2, b);
+        _blueMultiplier = 1;
     }
 }

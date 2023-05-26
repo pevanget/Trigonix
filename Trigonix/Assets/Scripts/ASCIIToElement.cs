@@ -22,17 +22,19 @@ public class ASCIIToElement : MonoBehaviour
     [Header("Misc")]
     public bool DebugColorValues = false;
     public Encoding ascii = Encoding.ASCII;
-
-    private byte[] _encodedBytes;
-    private string _decodedBytesASCII;
-    SpriteRenderer SR;
+    [SerializeField] private Decoder _decoder;
 
     private void Start()
     {
-        SR = GetComponent<SpriteRenderer>();
+        if (_decoder != null)
+        {
+            _decoder.SetDepths(_redColorDepth, _greenColorDepth, _blueColorDepth);
+        }
+        else
+        {
+            Debug.LogWarning("No decoder");
+        }
     }
-
-    
 
     public Color PaintElement(byte b)
     {
@@ -96,7 +98,7 @@ public class ASCIIToElement : MonoBehaviour
 
 
 
-    private void ColorSeparator()
+    private void ColorSeparator() //might be better
     {
         //RRRGGGBB
         //Red = mod128 xwris ta alla
