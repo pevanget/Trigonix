@@ -457,7 +457,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4884edbc9d1d9454ea0afae3651b81be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _myCam: {fileID: 0}
 --- !u!1 &594354865
 GameObject:
   m_ObjectHideFlags: 0
@@ -1696,11 +1695,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02310661498189b4da36a3bc3bd56838, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _firstElementPosition: {x: 0, y: 4}
   _UINumberOfElements: {fileID: 2019969958}
   _elementTriangle: {fileID: 1975518927678028590, guid: 6a5c7814902e4ba48b92b1aa55671470, type: 3}
-  _linesOfTriangle: 0
   _maxNumberOfCharacters: 900
-  _firstElementPosition: {x: 0, y: 4}
   _decodeButton: {fileID: 1460668621}
   _asciiToElement: {fileID: 637220695}
   _textFieldHandler: {fileID: 679850607}

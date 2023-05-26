@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Decoder : MonoBehaviour
 {
-    [SerializeField] private CodeGenerator _codeGen;
+    [SerializeField] private Encoder _codeGen;
 
     private int _redDepth, _greenDepth, _blueDepth;
     private int _redMultiplier, _greenMultiplier, _blueMultiplier;

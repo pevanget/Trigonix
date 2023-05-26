@@ -6,17 +6,10 @@ using System.Text;
 public class CheckString : MonoBehaviour
 {
     //https://learn.microsoft.com/en-us/dotnet/api/system.text.encoding.ascii?view=net-7.0
-    //https://www.thonky.com/qr-code-tutorial/format-version-information
+
     private Encoding _ascii = Encoding.ASCII;
     private int _maxSizeForString = 10;
     private bool _debugsOn = false;
-    
-    
-
-
-    
-
-
     
 
     public bool CheckStringValid(string stringToCheck)

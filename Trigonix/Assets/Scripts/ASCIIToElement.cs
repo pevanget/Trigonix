@@ -5,7 +5,6 @@ using System.Text;
 
 public class ASCIIToElement : MonoBehaviour
 {
-    //32 mexri 126
     [Header("Blue")]
     [SerializeField] private int _blueMod = 4; //this should be 0-1
     [SerializeField] private int _blueColorDepth = 2;
@@ -98,7 +97,7 @@ public class ASCIIToElement : MonoBehaviour
 
 
 
-    private void ColorSeparator() //might be better
+    private void ColorSeparator() //might be helpful
     {
         //RRRGGGBB
         //Red = mod128 xwris ta alla
