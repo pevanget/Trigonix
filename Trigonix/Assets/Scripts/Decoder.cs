@@ -13,9 +13,7 @@ public class Decoder : MonoBehaviour
   
 
     public void StartDecode()
-    {
-        
-        
+    {   
         Debug.Log("Starting Decoding");
         Transform[] elements = _codeGen.GetElementsTransforms();
         char[] characters = new char[elements.Length];
@@ -25,9 +23,7 @@ public class Decoder : MonoBehaviour
             characters[i] = DecodeElement(elements[i]);           
         }
         string str = new string(characters);
-        Debug.Log(str);
-
-
+        Debug.Log(str); //show in ui!
     }
 
     private char DecodeElement(Transform el)

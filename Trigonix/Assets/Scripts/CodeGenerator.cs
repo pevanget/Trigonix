@@ -29,6 +29,7 @@ public class CodeGenerator : MonoBehaviour
     [SerializeField] private ASCIIToElement _asciiToElement;
     [SerializeField] private TextFieldHandler _textFieldHandler;
     [SerializeField] private CheckString _checkString;
+    [SerializeField] private AdjustMyCamera _adjustMyCamera;
 
     public Encoding ascii = Encoding.ASCII;
 
@@ -106,8 +107,8 @@ public class CodeGenerator : MonoBehaviour
         _linesOfTriangle = CalculateNumberOfLinesNeeded(totalElementsNeeded);
 
         ///////////EDW
-
-        AdjustCamera(_linesOfTriangle);
+        _adjustMyCamera.AdjustCamera(_linesOfTriangle, _sizeElementY);
+        //_adjustMyCamera.AdjustCamera(_linesOfTriangle, _sizeElementY);
         CalculateNumberOfElementsPerLine();
 
         _positionsOfElements = new Vector2[_totalNumberOfElements];
@@ -119,40 +120,38 @@ public class CodeGenerator : MonoBehaviour
         ///
     }
 
-    private void AdjustCamera(int heightOfTriangle) //this should happen somewhere else
-    {
-        AdjustMyCamera adjustMyCamera = FindObjectOfType<AdjustMyCamera>();
-        heightOfTriangle++;
-        if (heightOfTriangle > 9)
-        {
-            adjustMyCamera._myCam.orthographicSize = Mathf.Floor((float)((float)(heightOfTriangle) / 5f)) * 3 + 2;
-        }
-        else
-        {
-            adjustMyCamera._myCam.orthographicSize = 5;
-        }
-        if (heightOfTriangle > 8)
-        {
-            heightOfTriangle -= 8;
-            heightOfTriangle /= 2;
-            Vector3 positionToMove = new Vector3(0, -heightOfTriangle * _sizeElementY, -10);
+    //private void AdjustCamera(int linesOfTriangle, float sizeElementY) //this should happen somewhere else
+    //{
+    //    linesOfTriangle++; //starts from 0
+    //    //_adjustMyCamera.AdjustCamera();
+    //    if (linesOfTriangle > 9)
+    //    {
+    //        _adjustMyCamera._myCam.orthographicSize = Mathf.Floor((float)((float)(linesOfTriangle) / 5f)) * 3 + 2;
+    //    }
+    //    else
+    //    {
+    //        _adjustMyCamera._myCam.orthographicSize = 5;
+    //    }
+    //    if (linesOfTriangle > 8)
+    //    {
+    //        linesOfTriangle -= 8;
+    //        linesOfTriangle /= 2;
+    //        Vector3 positionToMove = new Vector3(0, -linesOfTriangle * sizeElementY, -10);
 
-            adjustMyCamera.AdjustCamera(positionToMove);
-            //Debug.Log(heightOfTriangle + " " + positionToMove + " " + _sizeElementY);
-        }
-        else
-        {
-            heightOfTriangle = 8 - heightOfTriangle;
-            heightOfTriangle /= 2;
-            Vector3 positionToMove = new Vector3(0, heightOfTriangle * _sizeElementY, -10);
+    //        _adjustMyCamera.AdjustCamera(positionToMove);
+    //    }
+    //    else
+    //    {
+    //        linesOfTriangle = 8 - linesOfTriangle;
+    //        linesOfTriangle /= 2;
+    //        Vector3 positionToMove = new Vector3(0, linesOfTriangle * sizeElementY, -10);
 
-            adjustMyCamera.AdjustCamera(positionToMove);
-            //Debug.Log(heightOfTriangle + " " + positionToMove + " " + _sizeElementY);
-        }
+    //        _adjustMyCamera.AdjustCamera(positionToMove);
+    //    }
 
 
 
-    }
+    //}
 
     private void ActivateDecodeButton()
     {
@@ -186,7 +185,7 @@ public class CodeGenerator : MonoBehaviour
     {
         return 0;
     }
-    void CalculateNumberOfElementsPerLine()
+    private void CalculateNumberOfElementsPerLine()
     {
         _numberOfElementsPerLine = new int[_linesOfTriangle];
         _totalNumberOfElements = 0;
@@ -211,27 +210,6 @@ public class CodeGenerator : MonoBehaviour
 
     //}
 
-    public Transform[] GetElementsTransforms()
-    {
-        Debug.Log("check an doulevei");
-        if (_currentParent == null)
-        {
-            Debug.LogWarning("No elements were found");
-            return null;
-        }
-        else
-        {
-            Transform[] elemTransf = new Transform[_currentParent.transform.childCount];
-            int count = 0;
-            foreach (Transform child in _currentParent.transform)
-            {
-                elemTransf[count] = child;
-                count++;
-            }
-            return elemTransf;
-        }
-
-    }
 
 
 
@@ -291,5 +269,26 @@ public class CodeGenerator : MonoBehaviour
                 }
             }
         }
+    }
+    public Transform[] GetElementsTransforms()
+    {
+        Debug.Log("check an doulevei");
+        if (_currentParent == null)
+        {
+            Debug.LogWarning("No elements were found");
+            return null;
+        }
+        else
+        {
+            Transform[] elemTransf = new Transform[_currentParent.transform.childCount];
+            int count = 0;
+            foreach (Transform child in _currentParent.transform)
+            {
+                elemTransf[count] = child;
+                count++;
+            }
+            return elemTransf;
+        }
+
     }
 }
