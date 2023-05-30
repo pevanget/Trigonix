@@ -27,6 +27,7 @@ public class Encoder : MonoBehaviour
     [SerializeField] private GameObject _elementTriangle;
     [SerializeField] private int _maxNumberOfCharacters;
     [SerializeField] private Button _decodeButton;
+    [SerializeField] private Button _addDistortionButton;
     [SerializeField] private ASCIIToElement _asciiToElement;
     [SerializeField] private TextFieldHandler _textFieldHandler;
     [SerializeField] private CheckString _checkString;
@@ -123,6 +124,7 @@ public class Encoder : MonoBehaviour
     private void ActivateDecodeButton()
     {
         _decodeButton.interactable = true;
+        _addDistortionButton.interactable = true;
     }
 
     private int CalculateNumberOfLinesNeeded(int elementsInCode)

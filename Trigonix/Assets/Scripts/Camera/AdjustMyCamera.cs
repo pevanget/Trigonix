@@ -5,6 +5,7 @@ using UnityEngine;
 public class AdjustMyCamera : MonoBehaviour
 {
     private Camera _myCam;
+    [SerializeField] private Camera _screenshotCamera;
     
     void Start()
     {
@@ -18,10 +19,12 @@ public class AdjustMyCamera : MonoBehaviour
         if (linesOfTriangle > 9)
         {
             _myCam.orthographicSize = Mathf.Floor((float)((linesOfTriangle) / 5f)) * 3 + 2;
+            _screenshotCamera.orthographicSize = _myCam.orthographicSize;
         }
         else
         {
             _myCam.orthographicSize = 5;
+            _screenshotCamera.orthographicSize = _myCam.orthographicSize;
         }
         if (linesOfTriangle > 8)
         {
@@ -30,6 +33,7 @@ public class AdjustMyCamera : MonoBehaviour
             Vector3 positionToMove = new (0, -linesOfTriangle * sizeElementY, -10);
 
             transform.position = positionToMove;
+            _screenshotCamera.transform.position = positionToMove;
         }
         else
         {
@@ -38,6 +42,7 @@ public class AdjustMyCamera : MonoBehaviour
             Vector3 positionToMove = new (0, linesOfTriangle * sizeElementY, -10);
 
             transform.position = positionToMove;
+            _screenshotCamera.transform.position = positionToMove;
         }
     }
 }
