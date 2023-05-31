@@ -28,6 +28,7 @@ public class Encoder : MonoBehaviour
     [SerializeField] private int _maxNumberOfCharacters;
     [SerializeField] private Button _decodeButton;
     [SerializeField] private Button _addDistortionButton;
+    [SerializeField] private Button _screenshotButton;
     [SerializeField] private ASCIIToElement _asciiToElement;
     [SerializeField] private TextFieldHandler _textFieldHandler;
     [SerializeField] private CheckString _checkString;
@@ -115,16 +116,17 @@ public class Encoder : MonoBehaviour
         _encodedBytesASCII = ascii.GetBytes(_stringToEncode);
 
         Encode();
-        ActivateDecodeButton();
+        ActivateButtons();
 
     }
 
     
 
-    private void ActivateDecodeButton()
+    private void ActivateButtons()
     {
         _decodeButton.interactable = true;
         _addDistortionButton.interactable = true;
+        _screenshotButton.interactable = true;
     }
 
     private int CalculateNumberOfLinesNeeded(int elementsInCode)
