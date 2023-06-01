@@ -28,7 +28,7 @@ public class Decoder : MonoBehaviour
         string str = new string(characters);
         //_decodedText = str.To
         _decodedText.text = str;
-        Debug.Log(str); //show in ui!
+        //Debug.Log(str); //show in ui!
     }
 
     private char DecodeElement(Transform el)
