@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class Decoder : MonoBehaviour
 {
-    [SerializeField] private Encoder _codeGen;
+    [SerializeField] private Encoder _encoder;
+    [SerializeField] private TMP_InputField _decodedText;
 
     private int _redDepth, _greenDepth, _blueDepth;
     private int _redMultiplier, _greenMultiplier, _blueMultiplier;
@@ -15,7 +18,7 @@ public class Decoder : MonoBehaviour
     public void StartDecode()
     {   
         Debug.Log("Starting Decoding");
-        Transform[] elements = _codeGen.GetElementsTransforms();
+        Transform[] elements = _encoder.GetElementsTransforms();
         char[] characters = new char[elements.Length];
 
         for (int i = 0; i < elements.Length; i++)
@@ -23,6 +26,8 @@ public class Decoder : MonoBehaviour
             characters[i] = DecodeElement(elements[i]);           
         }
         string str = new string(characters);
+        //_decodedText = str.To
+        _decodedText.text = str;
         Debug.Log(str); //show in ui!
     }
 
@@ -40,7 +45,7 @@ public class Decoder : MonoBehaviour
     {
         float red = col.r * (Mathf.Pow(2,_redDepth)-1);
         float green = col.g * (Mathf.Pow(2, _greenDepth) - 1);
-        float blue = col.b * (Mathf.Pow(2, _redDepth) - 1);
+        float blue = col.b * (Mathf.Pow(2, _blueDepth) - 1);
         float num = red * _redMultiplier + green * _greenMultiplier + blue * _blueMultiplier;
         int numm = (int)num;
         char myChar;
