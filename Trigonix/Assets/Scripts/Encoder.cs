@@ -29,10 +29,12 @@ public class Encoder : MonoBehaviour
     [SerializeField] private Button _decodeButton;
     [SerializeField] private Button _addDistortionButton;
     [SerializeField] private Button _screenshotButton;
+    [SerializeField] private Toggle _maskingToggle;
     [SerializeField] private ASCIIToElement _asciiToElement;
     [SerializeField] private TextFieldHandler _textFieldHandler;
     [SerializeField] private CheckString _checkString;
     [SerializeField] private AdjustMyCamera _adjustMyCamera;
+    [SerializeField] private Masker _masker;
 
     public Encoding ascii = Encoding.ASCII;
 
@@ -116,11 +118,21 @@ public class Encoder : MonoBehaviour
         _encodedBytesASCII = ascii.GetBytes(_stringToEncode);
 
         Encode();
+        if (_maskingToggle.isOn)
+        {
+            Debug.Log("masking");
+            _masker.StartMasking();
+        }
+        else
+        {
+            Debug.Log("nomasking");
+        }
+
         ActivateButtons();
 
     }
 
-    
+
 
     private void ActivateButtons()
     {
@@ -168,7 +180,7 @@ public class Encoder : MonoBehaviour
         _UINumberOfElementsText.text = "Total number of elements: " + _totalNumberOfElements;
     }
 
-  
+
 
     private void ResetCode()
     {
