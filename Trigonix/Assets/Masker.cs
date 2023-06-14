@@ -11,6 +11,7 @@ public class Masker : MonoBehaviour
 
     [SerializeField] private Encoder _encoder;
     private Transform[] _elements;
+    
 
     public void StartMasking()
     {
