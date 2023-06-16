@@ -28,6 +28,13 @@ public class Masker : MonoBehaviour
     {
         _elements = _encoder.GetElementsTransforms();
         ClearOldParentObjects();
+        DuplicateCodeForMasking();
+
+        //Debug.Log(_elements.Length);
+    }
+
+    private void DuplicateCodeForMasking()
+    {
         for (int i = 0; i < 3; i++)
         {
             Vector3 positionToSpawn = new Vector3((-i - 1) * 50, 0, 0);
@@ -38,8 +45,7 @@ public class Masker : MonoBehaviour
             _parentMasked[i].position = positionToSpawn;
 
         }
-        //Debug.Log(_elements.Length);
-    }
+    }    
 
     private void ClearOldParentObjects()
     {
