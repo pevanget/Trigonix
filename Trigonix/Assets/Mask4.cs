@@ -9,7 +9,7 @@ public class Mask4 : MaskBase
         maskName = MaskName.mask4;
     }
 
-    public override void MaskCode()
+    public override void MaskCode(Transform parentToMask)
     {
         Debug.Log(this);
     }

@@ -13,8 +13,14 @@ public class Mask1 : MaskBase
         maskName = MaskName.mask1;
     }
 
-    public override void MaskCode()
+    public override void MaskCode(Transform parentToMask)
     {
+        //base.MaskCode(parentToMask);
         Debug.Log(this);
+        int elementCounter = 0;
+        foreach (Transform element in parentToMask)
+        {
+
+        }
     }
 }

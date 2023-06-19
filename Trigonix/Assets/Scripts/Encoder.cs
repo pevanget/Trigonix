@@ -247,7 +247,7 @@ public class Encoder : MonoBehaviour
     }
     public Transform[] GetElementsTransforms()
     {
-        Debug.Log("check an doulevei");
+        //Debug.Log("check an doulevei");
         if (_currentParent == null)
         {
             Debug.LogWarning("No elements were found");

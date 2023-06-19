@@ -14,7 +14,7 @@ public class Masker : MonoBehaviour
     private List<MaskBase> _masks = new List<MaskBase>();
     //private MaskBase[] _masks = new MaskBase[4];
     private Transform[] _elements;
-    private Transform[] _parentMasked = new Transform[3];
+    private Transform[] _parentMasked;
     private Vector2Int[] _triangleCoordsElements = new Vector2Int[900];
 
     private void Start()
@@ -29,6 +29,7 @@ public class Masker : MonoBehaviour
             _masks.Add(child.GetComponent<MaskBase>());
             childCounter++;
         }
+        _parentMasked = new Transform[_masks.Count];
 
 
         //Debug.Log(_triangleCoordsElements[72]);
@@ -42,7 +43,7 @@ public class Masker : MonoBehaviour
         DuplicateCodeForMasking();
         for (int i = 0; i < _masks.Count; i++)
         {
-            _masks[i].MaskCode();
+            _masks[i].MaskCode(_parentMasked[i]);
         }
 
         //Debug.Log(_elements.Length);
