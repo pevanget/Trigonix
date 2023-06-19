@@ -120,12 +120,12 @@ public class Encoder : MonoBehaviour
         Encode();
         if (_maskingToggle.isOn)
         {
-            Debug.Log("masking");
+            //Debug.Log("masking");
             _masker.StartMasking();
         }
         else
         {
-            Debug.Log("nomasking");
+            //Debug.Log("nomasking");
         }
 
         ActivateButtons();

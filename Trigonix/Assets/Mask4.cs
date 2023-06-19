@@ -2,15 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mask1 : MaskBase
+public class Mask4 : MaskBase
 {
-    
-
-
-
     protected override void Start()
     {
-        maskName = MaskName.mask1;
+        maskName = MaskName.mask4;
     }
 
     public override void MaskCode()

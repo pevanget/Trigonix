@@ -11,8 +11,10 @@ public abstract class MaskBase : MonoBehaviour
     {
 
     }
-    protected virtual void MaskCode()
-    { }
+    public virtual void MaskCode()
+    {
+        Debug.Log(this);
+    }
 
     protected int CountScore()
     {
