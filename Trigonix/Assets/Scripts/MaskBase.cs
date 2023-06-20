@@ -6,6 +6,9 @@ public abstract class MaskBase : MonoBehaviour
     public MaskName maskName;
     //protected Transform _parentTrans;
 
+    //allocate e.g. int maskFirstElements = 3  ===> start for i = 2. and do i =0 - 1 manually
+    //ftiakse encoder
+
     protected virtual void Start()
     {
 
