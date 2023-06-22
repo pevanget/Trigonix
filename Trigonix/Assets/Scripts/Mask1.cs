@@ -20,7 +20,7 @@ public class Mask1 : MaskBase
         int elementCounter = 0;
         foreach (Transform element in parentToMask)
         {
-
+            elementCounter++;
         }
     }
 }
