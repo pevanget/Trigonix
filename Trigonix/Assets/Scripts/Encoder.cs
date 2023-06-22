@@ -7,6 +7,11 @@ using System.Text;
 
 public class Encoder : MonoBehaviour
 {
+
+    //prodiagrafes dinoun dedomena se encoder masker klp
+
+
+
     /// <summary>
     /// Requirements:
     /// -Number of elements needed
@@ -14,14 +19,11 @@ public class Encoder : MonoBehaviour
     /// -ROBUST
     /// - DYNAMIC MASKING? appearance reasons - spread the error
     /// - reconstruction (vgazw fwtografia, einai "diplwmeno" reconstruct
-    /// 
-    /// </summary>
-    /// 
-
     /// Specs
     /// max 30 lines
     /// max 900 elements
-
+    /// </summary>
+    
     [SerializeField] Vector2 _firstElementPosition;
     [SerializeField] private GameObject _UINumberOfElements;
     [SerializeField] private GameObject _elementTriangle;
@@ -53,9 +55,8 @@ public class Encoder : MonoBehaviour
     private int _numberOfSpecialElements = 0;
     private int _totalMaxElements = 900;
     private int _maxLines = 30;
-
     private TMP_Text _UINumberOfElementsText;
-    // Start is called before the first frame update
+
     void Start()
     {
         Initialize();
@@ -72,44 +73,21 @@ public class Encoder : MonoBehaviour
         _positionsOfElements = new Vector2[_totalNumberOfElements];
         _UINumberOfElementsText.text = "Total number of elements: " + _totalNumberOfElements;
     }
-    private void CalculateLinesToTotalElementsMatrix()
+    private void ResetCode()
     {
-        _linesToTotalElements = new int[_maxLines];
-
-        for (int i = 0; i < _maxLines; i++)
-        {
-            _linesToTotalElements[i] = (i + 1) * (i + 1);
-        }
+        if (_currentParent != null) Destroy(_currentParent);
     }
-
-    private void CalculateSizeOfElement()
-    {
-        GameObject element = Instantiate(_elementTriangle, _firstElementPosition, Quaternion.identity);
-        SpriteRenderer SR = element.GetComponent<SpriteRenderer>();
-        _sizeElementX = SR.bounds.size.x;
-        _sizeElementY = SR.bounds.size.y;
-        Destroy(element);
-    }
-
+    
     public void StartEncode()
     {
         GetStringToEncode();
-        if (_checkString.CheckStringValid(_stringToEncode))
-        {
-            Debug.Log("Finished checking string.");
-        }
-        else
-        {
-            Debug.Log("String is invalid.");
-            return;
-        }
-        int totalElementsNeeded = CalculateNumberOfErrorCorrectionElementsNeeded(_stringToEncode) + _stringToEncode.Length + _numberOfSpecialElements;
-        bool isNotTooLargeCode = CheckNumberOfElements(totalElementsNeeded);
-        if (!isNotTooLargeCode) return;
-        //Debug.Log(totalElementsNeeded);
-        _linesOfTriangle = CalculateNumberOfLinesNeeded(totalElementsNeeded);
+        if (!_checkString.CheckStringValid(_stringToEncode)) return;
 
-        ///////////EDW
+        int totalElementsNeeded = CalculateNumberOfErrorCorrectionElementsNeeded(_stringToEncode.Length) + _stringToEncode.Length + _numberOfSpecialElements;
+        bool isNotTooLargeCode = CheckSizeOfCode(totalElementsNeeded);
+        if (!isNotTooLargeCode) return;
+
+        _linesOfTriangle = CalculateNumberOfLinesNeeded(totalElementsNeeded);
         _adjustMyCamera.AdjustCamera(_linesOfTriangle, _sizeElementY);
         CalculateNumberOfElementsPerLine();
 
@@ -118,21 +96,11 @@ public class Encoder : MonoBehaviour
         _encodedBytesASCII = ascii.GetBytes(_stringToEncode);
 
         Encode();
-        if (_maskingToggle.isOn)
-        {
-            //Debug.Log("masking");
-            _masker.StartMasking();
-        }
-        else
-        {
-            //Debug.Log("nomasking");
-        }
+        if (_maskingToggle.isOn) _masker.StartMasking(); //Debug.Log("masking"); 
+        //else //Debug.Log("nomasking");
 
         ActivateButtons();
-
     }
-
-
 
     private void ActivateButtons()
     {
@@ -140,21 +108,12 @@ public class Encoder : MonoBehaviour
         _addDistortionButton.interactable = true;
         _screenshotButton.interactable = true;
     }
-
-    private int CalculateNumberOfLinesNeeded(int elementsInCode)
-    {
-        for (int i = 0; i < _maxLines; i++)
-        {
-            if (elementsInCode <= _linesToTotalElements[i]) return i + 1;
-        }
-        Debug.LogWarning("Something bad happened");
-        return -1;
-    }
-    private bool CheckNumberOfElements(int elementsNeeded)
+    
+    private bool CheckSizeOfCode(int elementsNeeded)
     {
         if (elementsNeeded <= _totalMaxElements)
         {
-            Debug.Log("Size of Code within limits (is this necessary?)");
+            Debug.Log("Size of Code within limits");
             return true;
         }
         else
@@ -164,30 +123,6 @@ public class Encoder : MonoBehaviour
         }
     }
 
-    private int CalculateNumberOfErrorCorrectionElementsNeeded(string stringToEncode)
-    {
-        return 0;
-    }
-    private void CalculateNumberOfElementsPerLine()
-    {
-        _numberOfElementsPerLine = new int[_linesOfTriangle];
-        _totalNumberOfElements = 0;
-        for (int i = 0; i < _linesOfTriangle; i++)
-        {
-            _numberOfElementsPerLine[i] = 1 + 2 * i;
-            _totalNumberOfElements += _numberOfElementsPerLine[i];
-        }
-        _UINumberOfElementsText.text = "Total number of elements: " + _totalNumberOfElements;
-    }
-
-
-
-    private void ResetCode()
-    {
-        if (_currentParent != null) Destroy(_currentParent);
-    }
-
-
     private void GenerateFirstElement()
     {
         _positionsOfElements[_elementsCounter] = _firstElementPosition;
@@ -195,13 +130,11 @@ public class Encoder : MonoBehaviour
         SpriteRenderer SR = firstElement.GetComponent<SpriteRenderer>();
         _sizeElementX = SR.bounds.size.x;
         _sizeElementY = SR.bounds.size.y;
-        //Debug.Log(_sizeElementX + ", " + _sizeElementY);
         SR.color = _asciiToElement.PaintElement(_encodedBytesASCII[_elementsCounter]);
-        //SR.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
         _elementsCounter++;
     }
 
-    private void GetStringToEncode() => _stringToEncode = _textFieldHandler.GetStringToEncode();
+    
     public void Encode()
     {
         _attemptsGenerate++;
@@ -213,38 +146,25 @@ public class Encoder : MonoBehaviour
         {
             for (int j = 0; j < _numberOfElementsPerLine[i]; j++)
             {
-
                 if (i == 0)
                 {
                     GenerateFirstElement();
                 }
                 else
                 {
-
                     _positionsOfElements[_elementsCounter].x = _firstElementPosition.x - i * _sizeElementX / 2 + _sizeElementX * j / 2;
-                    //_positionsOfElements[counter].x = (j - (int)(_numberOfElementsPerLine[i] / 2)) + _sizeElementX * j;
                     _positionsOfElements[_elementsCounter].y = _firstElementPosition.y - i * _sizeElementY;
                     GameObject element = Instantiate(_elementTriangle, _positionsOfElements[_elementsCounter], Quaternion.identity, _parentObject.transform);
-                    if (j % 2 == 1)
-                    {
-                        element.transform.RotateAround(element.transform.position, transform.forward, 180f);
-                    }
-
+                    HandleFlipElement(element, j);
                     SpriteRenderer SR = element.GetComponent<SpriteRenderer>();
                     if (_elementsCounter < _stringToEncode.Length) SR.color = _asciiToElement.PaintElement(_encodedBytesASCII[_elementsCounter]);
                     else SR.color = Color.gray;
-
                     _elementsCounter++;
-                    if (_elementsCounter >= _stringToEncode.Length)
-                    {
-                        //Debug.Log("phinished");
-
-                    }
-
                 }
             }
         }
     }
+
     public Transform[] GetElementsTransforms()
     {
         //Debug.Log("check an doulevei");
@@ -264,6 +184,61 @@ public class Encoder : MonoBehaviour
             }
             return elemTransf;
         }
-
     }
+
+    #region Calculations
+    private void CalculateSizeOfElement()
+    {
+        GameObject element = Instantiate(_elementTriangle, _firstElementPosition, Quaternion.identity);
+        SpriteRenderer SR = element.GetComponent<SpriteRenderer>();
+        _sizeElementX = SR.bounds.size.x;
+        _sizeElementY = SR.bounds.size.y;
+        Destroy(element);
+    }
+    private int CalculateNumberOfErrorCorrectionElementsNeeded(int sizeStringToEncode)
+    {
+        return 0;
+    }
+    private void CalculateNumberOfElementsPerLine()
+    {
+        _numberOfElementsPerLine = new int[_linesOfTriangle];
+        _totalNumberOfElements = 0;
+        for (int i = 0; i < _linesOfTriangle; i++)
+        {
+            _numberOfElementsPerLine[i] = 1 + 2 * i;
+            _totalNumberOfElements += _numberOfElementsPerLine[i];
+        }
+        _UINumberOfElementsText.text = "Total number of elements: " + _totalNumberOfElements;
+    }
+
+    private void CalculateLinesToTotalElementsMatrix()
+    {
+        _linesToTotalElements = new int[_maxLines];
+
+        for (int i = 0; i < _maxLines; i++)
+        {
+            _linesToTotalElements[i] = (i + 1) * (i + 1);
+        }
+    }
+    private int CalculateNumberOfLinesNeeded(int elementsInCode)
+    {
+        for (int i = 0; i < _maxLines; i++)
+        {
+            if (elementsInCode <= _linesToTotalElements[i]) return i + 1;
+        }
+        Debug.LogWarning("Something bad happened");
+        return -1;
+    }
+    #endregion
+
+    #region Misc
+    private void GetStringToEncode() => _stringToEncode = _textFieldHandler.GetStringToEncode();
+    private void HandleFlipElement(GameObject elementToFlip, int position)
+    {
+        if (position % 2 == 1)
+        {
+            elementToFlip.transform.RotateAround(elementToFlip.transform.position, transform.forward, 180f);
+        }
+    }
+    #endregion
 }
