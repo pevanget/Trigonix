@@ -17,9 +17,14 @@ public class Mask1 : MaskBase
     {
         //base.MaskCode(parentToMask);
         Debug.Log(this);
-        int elementCounter = 0;
+        int elementCounter = 1;
         foreach (Transform element in parentToMask)
         {
+            SpriteRenderer SR = element.GetComponent<SpriteRenderer>();
+            if (elementCounter % 2 == 0)
+            {
+                SR.color = Color.white;
+            }
             elementCounter++;
         }
     }

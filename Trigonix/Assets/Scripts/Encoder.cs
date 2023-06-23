@@ -44,6 +44,7 @@ public class Encoder : MonoBehaviour
     private int[] _linesToTotalElements;
     private int _attemptsGenerate = 0;
     private int _elementsCounter = 0;
+    private int _messagePointer = 0;
     private Vector2[] _positionsOfElements;
     private float _sizeElementX, _sizeElementY;
     private int[] _numberOfElementsPerLine; //top to bottom
@@ -52,10 +53,11 @@ public class Encoder : MonoBehaviour
     private GameObject _parentObject;
     private string _stringToEncode;
     private byte[] _encodedBytesASCII;
-    private int _numberOfSpecialElements = 0;
+    private int _numberOfSpecialElements = 1;
     private int _totalMaxElements = 900;
     private int _maxLines = 30;
     private TMP_Text _UINumberOfElementsText;
+    
 
     void Start()
     {
@@ -130,7 +132,8 @@ public class Encoder : MonoBehaviour
         SpriteRenderer SR = firstElement.GetComponent<SpriteRenderer>();
         _sizeElementX = SR.bounds.size.x;
         _sizeElementY = SR.bounds.size.y;
-        SR.color = _asciiToElement.PaintElement(_encodedBytesASCII[_elementsCounter]);
+        //SR.color = _asciiToElement.PaintElement(_encodedBytesASCII[_elementsCounter]);
+        SR.color = Color.black;
         _elementsCounter++;
     }
 
@@ -142,6 +145,7 @@ public class Encoder : MonoBehaviour
         _parentObject = new GameObject("Parent Object no. " + _attemptsGenerate);
         _currentParent = _parentObject;
         _elementsCounter = 0;
+        _messagePointer = 0;
         for (int i = 0; i < _linesOfTriangle; i++)
         {
             for (int j = 0; j < _numberOfElementsPerLine[i]; j++)
@@ -157,9 +161,10 @@ public class Encoder : MonoBehaviour
                     GameObject element = Instantiate(_elementTriangle, _positionsOfElements[_elementsCounter], Quaternion.identity, _parentObject.transform);
                     HandleFlipElement(element, j);
                     SpriteRenderer SR = element.GetComponent<SpriteRenderer>();
-                    if (_elementsCounter < _stringToEncode.Length) SR.color = _asciiToElement.PaintElement(_encodedBytesASCII[_elementsCounter]);
+                    if (_messagePointer < _stringToEncode.Length) SR.color = _asciiToElement.PaintElement(_encodedBytesASCII[_messagePointer]);
                     else SR.color = Color.gray;
                     _elementsCounter++;
+                    _messagePointer++;
                 }
             }
         }
