@@ -74,23 +74,6 @@ public class Masker : MonoBehaviour
         }
     }
 
-    private void Mask1()
-    {
-
-    }
-    private void Mask2()
-    {
-
-    }
-    private void Mask3()
-    {
-
-    }
-    private void Mask4()
-    {
-
-    }
-
     private Vector2Int ToTriangleCoordinates(int i)
     {
         int row = Mathf.FloorToInt(Mathf.Sqrt(i));
