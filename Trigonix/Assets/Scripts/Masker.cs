@@ -30,10 +30,6 @@ public class Masker : MonoBehaviour
             childCounter++;
         }
         _parentMasked = new Transform[_masks.Count];
-
-
-        //Debug.Log(_triangleCoordsElements[72]);
-        //Debug.Log(_triangleCoordsElements[772]);
     }
 
     public void StartMasking()
@@ -44,10 +40,7 @@ public class Masker : MonoBehaviour
         for (int i = 0; i < _masks.Count; i++)
         {
             _masks[i].MaskCode(_parentMasked[i]);
-            Debug.Log(_masks.Count);
         }
-
-        //Debug.Log(_elements.Length);
     }
 
     private void DuplicateCodeForMasking()
@@ -55,9 +48,6 @@ public class Masker : MonoBehaviour
         for (int i = 0; i < _masks.Count; i++)
         {
             Vector3 positionToSpawn = new Vector3((-i - 1) * 50, 0, 0);
-            //Debug.Log(i);
-            //Debug.Log(_parentMasked.Length);
-            //Debug.Log(_parentMasked[i].position);
             _parentMasked[i] = Instantiate(_elements[0].parent, positionToSpawn, Quaternion.identity);
             _parentMasked[i].position = positionToSpawn;
 

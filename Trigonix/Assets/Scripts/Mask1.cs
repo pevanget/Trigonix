@@ -29,3 +29,9 @@ public class Mask1 : MaskBase
         }
     }
 }
+
+//algorithm
+//SCORING: check adjacent metro color
+//if i%2==0 + kati else - kati
+//script nearest neighbors o deksia o aristera kai o panw H katw
+//QOL = scroll camera?
