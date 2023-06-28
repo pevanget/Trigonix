@@ -44,6 +44,7 @@ public class Masker : MonoBehaviour
         for (int i = 0; i < _masks.Count; i++)
         {
             _masks[i].MaskCode(_parentMasked[i]);
+            Debug.Log(_masks.Count);
         }
 
         //Debug.Log(_elements.Length);
@@ -51,7 +52,7 @@ public class Masker : MonoBehaviour
 
     private void DuplicateCodeForMasking()
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < _masks.Count; i++)
         {
             Vector3 positionToSpawn = new Vector3((-i - 1) * 50, 0, 0);
             //Debug.Log(i);

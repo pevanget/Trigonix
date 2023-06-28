@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class Mask1 : MaskBase
 {
-
-
-
-
     protected override void Start()
     {
         //base.Start();
