@@ -35,3 +35,9 @@ public class Mask1 : MaskBase
 //if i%2==0 + kati else - kati
 //script nearest neighbors o deksia o aristera kai o panw H katw
 //QOL = scroll camera?
+
+//    		    0,0
+//		    1,0	1,1	1,2
+//	    2,0	2,1	2,2	2,3	2,4
+//  3,0	3,1	3,2	3,3	3,4	3,5	3,6
+// if

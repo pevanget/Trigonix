@@ -40,6 +40,7 @@ public class Masker : MonoBehaviour
         for (int i = 0; i < _masks.Count; i++)
         {
             _masks[i].MaskCode(_parentMasked[i]);
+            _masks[i].CountScore(_parentMasked[i]);
         }
     }
 
@@ -76,4 +77,7 @@ public class Masker : MonoBehaviour
 
     //find row = square root of i floored down
     //find number in row = i - row^2
+   
+
+
 }

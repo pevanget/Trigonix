@@ -21,10 +21,38 @@ public abstract class MaskBase : MonoBehaviour
         Debug.Log(this);
     }
 
-    protected int CountScore()
+    public int CountScore(Transform parentMasked)
     {
         int score = 0;
+
+        Transform[] elements = new Transform[parentMasked.childCount];
+        for (int i = 0; i < elements.Length; i++)
+        {
+            elements[i] = parentMasked.GetChild(i);
+            //SpriteRenderer SR = elements[i].GetComponent<SpriteRenderer>();
+            //if (i % 2 == 0)
+            //{
+            //    SR.color = Color.white;
+            //}
+
+        }
+
+        score += ScoringFunctionA(elements);
         return score;
+    }
+
+    private int ScoringFunctionA(Transform[] elements)
+    {
+        int scoreA = 0;
+        for (int i = 0; i < elements.Length; i++)
+        {
+
+        }
+
+
+
+
+        return scoreA;
     }
 
     public Color[] GetColors()
