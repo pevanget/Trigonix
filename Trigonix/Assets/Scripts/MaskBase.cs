@@ -35,12 +35,6 @@ public abstract class MaskBase : MonoBehaviour
         for (int i = 0; i < elements.Length; i++)
         {
             elements[i] = parentMasked.GetChild(i);
-            //SpriteRenderer SR = elements[i].GetComponent<SpriteRenderer>();
-            //if (i % 2 == 0)
-            //{
-            //    SR.color = Color.white;
-            //}
-
         }
 
         score += ScoringFunctionA(elements);
@@ -74,8 +68,30 @@ public abstract class MaskBase : MonoBehaviour
         return scoreA;
     }
 
-    //private int ScoringFunctionB(Transform[] elements)
+    //private int ScoringFunctionB(Transform[] elements) NOT FUNCTIONING                      ///////////////
     //{
+    //    int scoreB = 0;
+    //    for (int i = 0; i < elements.Length; i++)
+    //    {
+    //        SpriteRenderer SR = elements[i].GetComponent<SpriteRenderer>();
+    //        if (_leftNeighbor[i] >= 0)
+    //        {
+    //            SpriteRenderer SRLeft = elements[_leftNeighbor[i]].GetComponent<SpriteRenderer>();
+    //            scoreA += CompareColors(SR.color, SRLeft.color);
+    //        }
+    //        if (_rightNeighbor[i] >= 0)
+    //        {
+    //            SpriteRenderer SRRight = elements[_rightNeighbor[i]].GetComponent<SpriteRenderer>();
+    //            scoreA += CompareColors(SR.color, SRRight.color);
+    //        }
+    //        if (_upNeighbor[i] >= 0)
+    //        {
+    //            SpriteRenderer SRUp = elements[_upNeighbor[i]].GetComponent<SpriteRenderer>();
+    //            scoreA += CompareColors(SR.color, SRUp.color);
+    //        }
+    //    }
+    //    Debug.Log(maskName + " mask has " + scoreA + " penalty score");
+    //    return scoreA;
 
     //}
 
