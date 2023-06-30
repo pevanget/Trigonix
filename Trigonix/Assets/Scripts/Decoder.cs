@@ -26,7 +26,6 @@ public class Decoder : MonoBehaviour
             characters[i] = DecodeElement(elements[i]);           
         }
         string str = new string(characters);
-        //_decodedText = str.To
         _decodedText.text = str;
         //Debug.Log(str); //show in ui!
     }

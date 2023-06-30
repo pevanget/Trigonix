@@ -4,7 +4,8 @@ public abstract class MaskBase : MonoBehaviour
 {
     public enum MaskName { mask1, mask2, mask3, mask4 };
     public MaskName maskName;
-    private float _thresholdColorComparison = 0.25f;
+    private float _thresholdSimilarPenalty = 0.5f;
+    private float _thresholdDifferentReward = 0.75f;
     protected Color[] _maskColors = new Color[MaskName.GetNames(typeof(MaskName)).Length];
     protected Color _thisMaskColor;
     protected Vector2Int[] _triangleCoordinates = new Vector2Int[900];
@@ -43,6 +44,7 @@ public abstract class MaskBase : MonoBehaviour
         }
 
         score += ScoringFunctionA(elements);
+        //score += ScoringFunctionB(elements);
         return score;
     }
 
@@ -52,12 +54,8 @@ public abstract class MaskBase : MonoBehaviour
         for (int i = 0; i < elements.Length; i++)
         {
             SpriteRenderer SR = elements[i].GetComponent<SpriteRenderer>();
-            //bool rightNeighborExists = CheckRightNeighborExists();
             if (_leftNeighbor[i] >= 0)
             {
-                //Debug.Log(i);
-                //Debug.Log(_leftNeighbor[i]);
-                //Debug
                 SpriteRenderer SRLeft = elements[_leftNeighbor[i]].GetComponent<SpriteRenderer>();
                 scoreA += CompareColors(SR.color, SRLeft.color);
             }
@@ -71,14 +69,15 @@ public abstract class MaskBase : MonoBehaviour
                 SpriteRenderer SRUp = elements[_upNeighbor[i]].GetComponent<SpriteRenderer>();
                 scoreA += CompareColors(SR.color, SRUp.color);
             }
-
         }
-
-
-
-        Debug.Log(this + " mask has " + scoreA + " penalty score");
+        Debug.Log(maskName + " mask has " + scoreA + " penalty score");
         return scoreA;
     }
+
+    //private int ScoringFunctionB(Transform[] elements)
+    //{
+
+    //}
 
     public Color[] GetColors()
     {
@@ -106,7 +105,9 @@ public abstract class MaskBase : MonoBehaviour
         int valueToReturn = 0;
         Color c = a - b;
         float valueToComp = c.r * c.r + c.g * c.g + c.b * c.b;
-        if (valueToComp < _thresholdColorComparison) valueToReturn -= 1;
+        valueToComp = Mathf.Sqrt(valueToComp);
+        if (valueToComp < _thresholdSimilarPenalty) valueToReturn -= 5;
+        if (valueToComp > _thresholdDifferentReward) valueToReturn += 1;
         //else valueToReturn++;
 
         return valueToReturn;
