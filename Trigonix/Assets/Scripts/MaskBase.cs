@@ -7,6 +7,7 @@ public abstract class MaskBase : MonoBehaviour
     private float _thresholdSimilarPenalty = 0.5f;
     private float _thresholdDifferentReward = 0.75f;
     protected Color[] _maskColors = new Color[MaskName.GetNames(typeof(MaskName)).Length];
+    //protected int[] _score = new int[MaskName.GetNames(typeof(MaskName)).Length];
     protected Color _thisMaskColor;
     protected Vector2Int[] _triangleCoordinates = new Vector2Int[900];
     protected int[] _leftNeighbor = new int[900];
@@ -26,6 +27,8 @@ public abstract class MaskBase : MonoBehaviour
     {
         Debug.Log(this);
     }
+
+    public Color GetColorOfMask(int j) => _thisMaskColor;
 
     public int CountScore(Transform parentMasked)
     {
@@ -128,6 +131,14 @@ public abstract class MaskBase : MonoBehaviour
 
         return valueToReturn;
     }
+
+    protected virtual void DemaskCode(Transform parentMasked) //or Transform[] elements
+    {
+
+    }
+
+    public virtual void UnmaskElement(int i, Transform element)
+    { }
 
 
     

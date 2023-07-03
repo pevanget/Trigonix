@@ -7,7 +7,9 @@ using TMPro;
 public class Decoder : MonoBehaviour
 {
     [SerializeField] private Encoder _encoder;
+    [SerializeField] private Masker _masker;
     [SerializeField] private TMP_InputField _decodedText;
+    [SerializeField] private Toggle _maskingToggle;
 
     private int _redDepth, _greenDepth, _blueDepth;
     private int _redMultiplier, _greenMultiplier, _blueMultiplier;
@@ -16,14 +18,64 @@ public class Decoder : MonoBehaviour
   
 
     public void StartDecode()
-    {   
-        Debug.Log("Starting Decoding");
+    {
+        if (_maskingToggle.isOn) DecodeMasked();
+        else DecodeUnmasked();
+    }
+
+    private void DecodeMasked()
+    {
+        Transform parentMasked = _masker.GetBestParentMasked();
+        Transform[] elementsMasked = new Transform[parentMasked.childCount];
+
+
+        for (int i = 0; i < elementsMasked.Length; i++)
+        {
+            elementsMasked[i] = parentMasked.GetChild(i);
+        }
+        int maskID = FindMask(elementsMasked[0]);
+        for (int i = 1; i < elementsMasked.Length; i++)
+        {
+            SpriteRenderer SR = elementsMasked[i].GetComponent<SpriteRenderer>();
+            _masker.GetMask(maskID).UnmaskElement(i, elementsMasked[i]);
+        }
+
+        char[] characters = new char[elementsMasked.Length];
+
+        for (int i = 1; i < elementsMasked.Length; i++)
+        {
+            characters[i-1] = DecodeElement(elementsMasked[i]);
+        }
+        string str = new string(characters);
+        _decodedText.text = str;
+        //Transform elementsMasked = 
+    }
+
+    private int FindMask(Transform elementOfMask)
+    {
+        int idOfMask = -1;
+        SpriteRenderer SR = elementOfMask.GetComponent<SpriteRenderer>();
+        for (int i = 0; i < _masker.GetNumberOfMasks(); i++)
+        {
+            if (SR.color == _masker.GetMask(i).GetColorOfMask(i))
+            {
+                idOfMask = i;
+            }
+        }
+
+        return idOfMask;
+    }
+
+
+    private void DecodeUnmasked()
+    {
+        Debug.Log("Starting Unmasked Decoding");
         Transform[] elements = _encoder.GetElementsTransforms();
         char[] characters = new char[elements.Length];
 
         for (int i = 0; i < elements.Length; i++)
         {
-            characters[i] = DecodeElement(elements[i]);           
+            characters[i] = DecodeElement(elements[i]);
         }
         string str = new string(characters);
         _decodedText.text = str;

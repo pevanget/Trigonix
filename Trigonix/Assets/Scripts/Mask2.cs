@@ -20,10 +20,10 @@ public class Mask2 : MaskBase
         {
             elements[i] = parentToMask.GetChild(i);
             SpriteRenderer SR = elements[i].GetComponent<SpriteRenderer>();
-            if (i % 3 == 0)
-            {
-                SR.color = Color.white;
-            }
+            //if (i % 3 == 0)
+            //{
+            SR.color = Color.white;
+            //}
 
         }
     }

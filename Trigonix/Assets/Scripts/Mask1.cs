@@ -23,9 +23,18 @@ public class Mask1 : MaskBase
             SpriteRenderer SR = elements[i].GetComponent<SpriteRenderer>();
             if (i % 2 == 0)
             {
-                SR.color = Color.white;
+                SR.color = new Color(SR.color.b, SR.color.g, SR.color.r);
             }
 
+        }
+    }
+
+    public override void UnmaskElement(int i, Transform element)
+    {
+        if (i % 2 == 0)
+        {
+            SpriteRenderer SR = element.GetComponent<SpriteRenderer>();
+            SR.color = new Color(SR.color.b, SR.color.g, SR.color.r);
         }
     }
 }

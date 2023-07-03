@@ -2333,7 +2333,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _encoder: {fileID: 1393397847}
+  _masker: {fileID: 2138587189}
   _decodedText: {fileID: 1408783523}
+  _maskingToggle: {fileID: 146048751}
 --- !u!4 &955321003
 Transform:
   m_ObjectHideFlags: 0
