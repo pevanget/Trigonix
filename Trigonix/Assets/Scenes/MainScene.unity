@@ -1029,9 +1029,9 @@ RectTransform:
   m_Father: {fileID: 1526354710}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1768, y: -1063}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -152, y: 17}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &347581755
@@ -2757,7 +2757,6 @@ MonoBehaviour:
   _encoder: {fileID: 1393397847}
   _masker: {fileID: 2138587189}
   _decodedText: {fileID: 1408783523}
-  _decodedMessageUsingMask: {fileID: 0}
   _maskingToggle: {fileID: 146048751}
 --- !u!4 &955321003
 Transform:
