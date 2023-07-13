@@ -47,8 +47,9 @@ public class AdjustMyCamera : MonoBehaviour
     }
 
 
-    //private void Update()
-    //{
-    //    if (Input.GetAxis)
-    //}
+    public void ResetCamera()
+    {
+        _myCam.transform.rotation = Quaternion.identity;
+        _myCam.transform.position = new Vector3(0, 0, -10);
+    }
 }

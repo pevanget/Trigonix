@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using TMPro;
 
 public class Masker : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class Masker : MonoBehaviour
 
     [SerializeField] private Encoder _encoder;
     [SerializeField] private Transform _masksContainer;
+    [SerializeField] private TMP_Text _bestMask;
     private List<MaskBase> _masks = new List<MaskBase>();
     //private MaskBase[] _masks = new MaskBase[4];
     private Transform[] _unmaskedElements;
@@ -83,7 +85,9 @@ public class Masker : MonoBehaviour
             }
         }
         int debugMaskIndex = maxIndex + 1;
-        Debug.Log("Best mask is mask "+ debugMaskIndex);
+        _bestMask.text = "Best Mask: " + debugMaskIndex;
+        //Debug.Log("Best mask is mask "+ debugMaskIndex);
+
         return maxIndex;
     }
 
