@@ -45,4 +45,10 @@ public class AdjustMyCamera : MonoBehaviour
             _screenshotCamera.transform.position = positionToMove;
         }
     }
+
+
+    //private void Update()
+    //{
+    //    if (Input.GetAxis)
+    //}
 }

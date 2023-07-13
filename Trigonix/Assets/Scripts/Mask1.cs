@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// This mask switches R and B values
+
 public class Mask1 : MaskBase
 {
     protected override void Start()
@@ -25,6 +27,7 @@ public class Mask1 : MaskBase
             {
                 SR.color = new Color(SR.color.b, SR.color.g, SR.color.r);
             }
+            //SR.color = Color.white;
 
         }
     }

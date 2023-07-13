@@ -82,7 +82,8 @@ public class Masker : MonoBehaviour
                 maxIndex = i;
             }
         }
-        Debug.Log(maxIndex);
+        int debugMaskIndex = maxIndex + 1;
+        Debug.Log("Best mask is mask "+ debugMaskIndex);
         return maxIndex;
     }
 
@@ -99,7 +100,7 @@ public class Masker : MonoBehaviour
 
     private void ClearOldParentObjects()
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < _numberOfMasks; i++)
         {
             if (_parentMasked[i] != null)
             {

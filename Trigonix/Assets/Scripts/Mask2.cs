@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// This mask shuffles RGB values: RGB -> RBG
+//test this string
+
+//dfffee
+
 public class Mask2 : MaskBase
 {
     protected override void Start()
@@ -20,11 +25,28 @@ public class Mask2 : MaskBase
         {
             elements[i] = parentToMask.GetChild(i);
             SpriteRenderer SR = elements[i].GetComponent<SpriteRenderer>();
-            //if (i % 3 == 0)
-            //{
-            SR.color = Color.white;
-            //}
+            if (i % 2 == 0)
+            {
+                //SR.color = Color.white - SR.color;
+                //Debug.Log(SR.color);
 
+                //SR.color = new Color(1 - SR.color.r, 1 - SR.color.g, 1 - SR.color.b);
+                //Debug.Log(SR.color);
+                SR.color = new Color(SR.color.r, SR.color.b, SR.color.g);
+
+            }
+            //SR.color = Color.white;
+        }
+    }
+
+    public override void UnmaskElement(int i, Transform element)
+    {
+        if (i % 2 == 0)
+        {
+            SpriteRenderer SR = element.GetComponent<SpriteRenderer>();
+            //SR.color = new Color(1 - SR.color.r, 1 - SR.color.g, 1 - SR.color.b);
+            //Debug.Log(SR.color);
+            SR.color = new Color(SR.color.r, SR.color.b, SR.color.g);
         }
     }
 }

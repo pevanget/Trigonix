@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// This mask shifts RGB values to the right (RGB -> BRG)
 public class Mask4 : MaskBase
 {
     protected override void Start()
@@ -20,11 +21,21 @@ public class Mask4 : MaskBase
         {
             elements[i] = parentToMask.GetChild(i);
             SpriteRenderer SR = elements[i].GetComponent<SpriteRenderer>();
-            if (i % 5 == 0)
+            //if (i % 2 == 0)
             {
-                SR.color = Color.white;
+                SR.color = new Color(SR.color.b, SR.color.r, SR.color.g);
             }
+            //SR.color = Color.white;
+        }
+    }
 
+    public override void UnmaskElement(int i, Transform element)
+    {
+        //if (i % 2 == 0)
+        {
+            SpriteRenderer SR = element.GetComponent<SpriteRenderer>();
+            SR.color = new Color(SR.color.g, SR.color.b, SR.color.r);
+            Debug.Log(SR.color);
         }
     }
 }
