@@ -9,7 +9,7 @@ public class Decoder : MonoBehaviour
     [SerializeField] private Encoder _encoder;
     [SerializeField] private Masker _masker;
     [SerializeField] private TMP_InputField _decodedText;
-    [SerializeField] private TMP_Text _decodedMessageUsingMask;
+    //[SerializeField] private TMP_Text _decodedMessageUsingMask;
     [SerializeField] private Toggle _maskingToggle;
 
     private int _redDepth, _greenDepth, _blueDepth;
