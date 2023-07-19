@@ -28,5 +28,8 @@ public class CameraHandler : MonoBehaviour
         _mainCameraUI.SetActive(!_mainCameraUI.activeSelf);
         _secondaryCamera.enabled = !_secondaryCamera.enabled;
         _secondaryCameraUI.SetActive(!_secondaryCameraUI.activeSelf);
+        
+        //if (_secondaryCamera.isActiveAndEnabled)
+        //{ }
     }
 }

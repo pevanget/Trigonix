@@ -58,7 +58,7 @@ public class Masker : MonoBehaviour
     public void StartMasking()
     {
         _unmaskedElements = _encoder.GetElementsTransforms();
-        Debug.Log(_unmaskedElements.Length);
+        //Debug.Log(_unmaskedElements.Length);
         ClearOldParentObjects();
         DuplicateCodeForMasking();
         for (int i = 0; i < _masks.Count; i++)
