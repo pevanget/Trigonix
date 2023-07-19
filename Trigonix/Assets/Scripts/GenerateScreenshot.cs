@@ -34,7 +34,16 @@ public class GenerateScreenshot : MonoBehaviour
         //Debug.Log( _mainCamera.transform.position);
         Texture2D myTexture = toTexture2D(_rendText);
         byte[] bytes = myTexture.EncodeToPNG();
+        byte[] bytesGray = new byte[1920*1080];
         File.WriteAllBytes(Application.dataPath + "/../Screenshots/SavedScreen.png", bytes);
+        for (int i = 0; i < 1920; i++)
+        {
+            for (int j = 0; j < 1080; j++)
+            {
+             //byte[i] = myTexture.GetPixel(i,j).grayscale;
+            }
+        }
+        
         Debug.Log("Screenshot saved!");
         //_camera.enabled = false;
 
