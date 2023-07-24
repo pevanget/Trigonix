@@ -76,25 +76,26 @@ public class ProcessScreenshot : MonoBehaviour
     private Vector2 FindStart()
     {
         Vector2 pos = new Vector2(-666, -666);
-        bool found = false;
+        //bool found = false;
         for (int j = 1079; j > -1; j--)
         {
-                //Debug.Log(j);
+            //Debug.Log(j);
             for (int i = 0; i < 1920; i++)
             {
                 Color col = _texBnW.GetPixel(i, j);
                 if (col == Color.black)
                 {
                     pos = new Vector2(i, j);
-                    found = true;
-                    break;
+                    Debug.Log(pos);
+                    return pos;
+                    //break;
                 }
                 //else pos = new Vector2(-200, -200);
             }
-            if (found) break;
+            //if (found) break;
         }
-        Debug.Log(pos);
         if (pos == new Vector2(-666, -666)) Debug.Log("Failed to find start");
+        Debug.Log(pos);
         return pos;
     }
 
@@ -104,7 +105,7 @@ public class ProcessScreenshot : MonoBehaviour
         int x = (int)posStart.x;
         int y = (int)posStart.y;
         bool switchedColors = false;
-        bool found = false;
+        //bool found = false;
         for (int j = y - 1; j > -1; j--)
         {
             if (_texBnW.GetPixel(x, j) == Color.white)
@@ -114,9 +115,11 @@ public class ProcessScreenshot : MonoBehaviour
             if ((_texBnW.GetPixel(x, j) == Color.black) && switchedColors)
             {
                 pos = new Vector2(x, j);
-                found = true;
+                Debug.Log(pos);
+                return pos;
+                //found = true;
             }
-            if (found) break;
+            //if (found) break;
         }
 
 
