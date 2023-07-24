@@ -37,7 +37,7 @@ public class Mask3 : MaskBase
         {
             SpriteRenderer SR = element.GetComponent<SpriteRenderer>();
             SR.color = new Color(SR.color.b, SR.color.r, SR.color.g);
-            Debug.Log(SR.color);
+            //Debug.Log(SR.color);
         }
     }
 }
