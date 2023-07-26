@@ -133,7 +133,7 @@ public class Encoder : MonoBehaviour
         _sizeElementX = SR.bounds.size.x;
         _sizeElementY = SR.bounds.size.y;
         //SR.color = _asciiToElement.PaintElement(_encodedBytesASCII[_elementsCounter]);
-        SR.color = Color.black;
+        SR.color = Color.cyan;
         _elementsCounter++;
     }
 
