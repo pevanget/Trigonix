@@ -10,11 +10,15 @@ public class GenerateScreenshot : MonoBehaviour
     [SerializeField] private Camera _thisCamera;
     [SerializeField] private Camera _mainCamera;
     private RenderTexture _rendText;
+    private string _pathForBuild; 
+    private string _pathForEditor; 
     //private RenderTexture tex;
     void Start()
     {
         //_camera = GetComponent<Camera>();
         _rendText = _thisCamera.targetTexture;
+        _pathForBuild = Application.persistentDataPath;
+        _pathForEditor = Application.dataPath + "/../Screenshots";
     }
 
     // Update is called once per frame
@@ -35,7 +39,8 @@ public class GenerateScreenshot : MonoBehaviour
         Texture2D myTexture = toTexture2D(_rendText);
         byte[] bytes = myTexture.EncodeToPNG();
         //byte[] bytesGray = new byte[1920*1080];
-        File.WriteAllBytes(Application.dataPath + "/../Screenshots/SavedScreen.png", bytes);
+        if (Directory.Exists(_pathForEditor)) File.WriteAllBytes(_pathForEditor + "/SavedScreen.png", bytes); //path for editor
+        if (Directory.Exists(_pathForBuild)) File.WriteAllBytes(_pathForBuild + Path.AltDirectorySeparatorChar + "SavedScreen.png", bytes); //path for my pc
         //for (int i = 0; i < 1920; i++)
         //{
         //    for (int j = 0; j < 1080; j++)

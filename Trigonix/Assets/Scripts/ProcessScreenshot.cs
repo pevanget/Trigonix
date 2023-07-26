@@ -10,15 +10,19 @@ public class ProcessScreenshot : MonoBehaviour
     //[SerializeField]
     private Texture2D _tex;
     private Texture2D _texBnW;
-    private string _pathOriginal;
-    private string _pathBnW;
+    private string _pathForEditorOriginal;
+    private string _pathForEditorBnW;
+    private string _pathForBuildOriginal;
+    private string _pathForBuildBnW;
     //private string _pathBnW; 
     private byte[] _fileData; //might need to reset
     // Start is called before the first frame update
     void Start()
     {
-        _pathOriginal = Application.dataPath + "/../Screenshots/SavedScreen.png";
-        _pathBnW = Application.dataPath + "/../Screenshots/SavedScreenBlackAndWhite.png";
+        _pathForEditorOriginal = Application.dataPath + "/../Screenshots";
+        _pathForEditorBnW = Application.dataPath + "/../Screenshots";
+        _pathForBuildOriginal = Application.persistentDataPath;
+        _pathForBuildBnW = Application.persistentDataPath;
     }
 
     public void DecodeLastScreenshot()
@@ -33,11 +37,25 @@ public class ProcessScreenshot : MonoBehaviour
     private void LoadScreenshot()
     {
         //Application.dataPath + "/../Screenshots/SavedScreen.png"
-        if (File.Exists(_pathOriginal))
+        if (Directory.Exists(_pathForEditorOriginal))
         {
-            _fileData = File.ReadAllBytes(_pathOriginal);
-            _tex = new Texture2D(2, 2);
-            _tex.LoadImage(_fileData);
+            if (File.Exists(_pathForEditorOriginal + "/SavedScreen.png"))
+            {
+                _fileData = File.ReadAllBytes(_pathForEditorOriginal + "/SavedScreen.png");
+                _tex = new Texture2D(2, 2);
+                _tex.LoadImage(_fileData);
+                Debug.Log("Screenshot found on editor");
+            }
+        }
+        else if (Directory.Exists(_pathForBuildOriginal))
+        {
+            if (File.Exists(_pathForBuildOriginal + Path.AltDirectorySeparatorChar + "SavedScreen.png"))
+            {
+                _fileData = File.ReadAllBytes(_pathForBuildOriginal + Path.AltDirectorySeparatorChar + "SavedScreen.png");
+                _tex = new Texture2D(2, 2);
+                _tex.LoadImage(_fileData);
+                Debug.Log("Screenshot found on build");
+            }
         }
         else Debug.Log("No screenshot to process was found");
     }
@@ -54,20 +72,35 @@ public class ProcessScreenshot : MonoBehaviour
             }
         }
         byte[] bytes = _tex.EncodeToPNG();
-        File.WriteAllBytes(_pathBnW, bytes);
+        if (Directory.Exists(_pathForEditorBnW)) File.WriteAllBytes(_pathForEditorBnW + "/SavedScreenBlackAndWhite.png", bytes);
+        if (Directory.Exists(_pathForBuildBnW)) File.WriteAllBytes(_pathForBuildBnW + Path.AltDirectorySeparatorChar + "SavedScreenBlackAndWhite.png", bytes);
+        //if (Directory.Exists(_pathForBuildBnW)) File.WriteAllBytes(_pathForBuildBnW + Path.AltDirectorySeparatorChar + "SavedScreen.png", bytes); //path for my pc
+
+        //if (Directory.Exists(_pathForEditor)) File.WriteAllBytes(_pathForEditor, bytes); //path for editor
     }
 
     private void FindStartAndSize()
     {
-        if (File.Exists(_pathBnW))
+        if (File.Exists(_pathForEditorBnW))
         {
-            _fileData = File.ReadAllBytes(_pathBnW);
+            _fileData = File.ReadAllBytes(_pathForEditorBnW);
             _texBnW = new Texture2D(2, 2);
             _texBnW.LoadImage(_fileData);
 
             Vector2 StartOfCode = FindStart();
             Vector2 StartOfBelowStart = FindBelowStart(StartOfCode);
+            Debug.Log("BnW Screenshot found on editor");
 
+        }
+        else if (File.Exists(_pathForBuildBnW))
+        {
+            _fileData = File.ReadAllBytes(_pathForBuildBnW);
+            _texBnW = new Texture2D(2, 2);
+            _texBnW.LoadImage(_fileData);
+
+            Vector2 StartOfCode = FindStart();
+            Vector2 StartOfBelowStart = FindBelowStart(StartOfCode);
+            Debug.Log("BnW Screenshot found on build");
         }
         else Debug.Log("No BnW screenshot to process was found");
     }
