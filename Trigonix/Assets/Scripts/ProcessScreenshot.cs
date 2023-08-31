@@ -8,7 +8,7 @@ public class ProcessScreenshot : MonoBehaviour
 {
 
     //PROBLEM: ENCODE: Debug.Log(switchedColors);
-    //[SerializeField]
+    [SerializeField] private DecodeScreenshot _decScreen;
     private int _pixelStepBelow = 0;
     private int _pixelStepRight = 0;
     private Vector2Int _startOfCode;
@@ -39,10 +39,7 @@ public class ProcessScreenshot : MonoBehaviour
 
     private void DecodeScreenshot()
     {
-        //for (int i = 0; i < length; i++)
-        //{
-
-        //}
+        _decScreen.StartDecoding(_tex, _startOfCode, _endOfCode, _pixelStepBelow, _pixelStepRight);
     }
 
     private void LoadScreenshot()
@@ -90,9 +87,8 @@ public class ProcessScreenshot : MonoBehaviour
 
     private void FindSpecs()
     {
-        Vector2 startOfCode = new Vector2(-1, -1);
-        Vector2 startOfBelowStart = new Vector2(-1, -1);
-        Vector2 endOfCode = new Vector2(-1, -1);
+        
+        Vector2 _startOfBelowStart = new Vector2(-1, -1);
         bool succesful = false;
         if (File.Exists(_pathForEditor + "/SavedScreenBlackAndWhite.png"))
         {
@@ -114,28 +110,28 @@ public class ProcessScreenshot : MonoBehaviour
             Debug.Log("BnW Screenshot found on build");
         }
         else Debug.Log("No BnW screenshot to process was found");
-        startOfCode = FindStart();
-        startOfBelowStart = FindBelowStart(startOfCode);
-        endOfCode = FindEnd(startOfCode);
-        Debug.Log(endOfCode);
+        _startOfCode = FindStart();
+        _startOfBelowStart = FindBelowStart(_startOfCode);
+        _endOfCode = FindEnd(_startOfCode);
+        Debug.Log(_endOfCode);
 
 
         if (!succesful) return;
 
-        _pixelStepBelow = (int)(startOfCode.y - startOfBelowStart.y);
+        _pixelStepBelow = (int)(_startOfCode.y - _startOfBelowStart.y);
         Debug.Log(_pixelStepBelow);
-        Vector2 endMiddleOfFirstTriangle = new Vector2(startOfCode.x, startOfCode.y - _pixelStepBelow);
+        Vector2Int endMiddleOfFirstTriangle = new Vector2Int(_startOfCode.x, _startOfCode.y - _pixelStepBelow);
         _pixelStepRight = FindWidth(endMiddleOfFirstTriangle);
         Debug.Log(_pixelStepRight);
 
-        Vector2 centerOfThirdTriangle = new Vector2(startOfCode.x, (int)(startOfCode.y - _pixelStepBelow * 1.5f));
-        Debug.Log(startOfCode);
-        Debug.Log(centerOfThirdTriangle);
+        //Vector2Int centerOfThirdTriangle = new Vector2Int(_startOfCode.x, (int)(_startOfCode.y - _pixelStepBelow * 1.5f));
+        //Debug.Log(_startOfCode);
+        //Debug.Log(centerOfThirdTriangle);
 
 
     }
 
-    private int FindWidth(Vector2 centerOfBottomEdge)
+    private int FindWidth(Vector2Int centerOfBottomEdge)
     {
         int width = 0;
         bool found = false;
@@ -153,9 +149,9 @@ public class ProcessScreenshot : MonoBehaviour
         return width;
     }
 
-    private Vector2 FindStart()
+    private Vector2Int FindStart()
     {
-        Vector2 pos = new Vector2(-666, -666);
+        Vector2Int pos = new Vector2Int(-666, -666);
         for (int j = 1079; j > -1; j--)
         {
             for (int i = 0; i < 1920; i++)
@@ -163,22 +159,22 @@ public class ProcessScreenshot : MonoBehaviour
                 Color col = _texBnW.GetPixel(i, j);
                 if (col == Color.black)
                 {
-                    pos = new Vector2(i, j);
-                    Debug.Log(pos);
+                    pos = new Vector2Int(i, j);
+                    //Debug.Log(pos);
                     return pos;
                 }
             }
         }
-        if (pos == new Vector2(-666, -666)) Debug.Log("Failed to find start");
-        Debug.Log(pos);
+        if (pos == new Vector2Int(-666, -666)) Debug.Log("Failed to find start");
+        //Debug.Log(pos);
         return pos;
     }
 
-    private Vector2 FindBelowStart(Vector2 posStart)
+    private Vector2Int FindBelowStart(Vector2Int posStart)
     {
-        Vector2 pos = new Vector2(-666, -666);
-        int x = (int)posStart.x;
-        int y = (int)posStart.y;
+        Vector2Int pos = new Vector2Int(-666, -666);
+        int x = posStart.x;
+        int y = posStart.y;
         bool switchedColors = false;
         for (int j = y - 1; j > -1; j--)
         {
@@ -188,22 +184,22 @@ public class ProcessScreenshot : MonoBehaviour
             }
             if ((_texBnW.GetPixel(x, j) == Color.black) && switchedColors)
             {
-                pos = new Vector2(x, j);
-                Debug.Log(pos);
+                pos = new Vector2Int(x, j);
+                //Debug.Log(pos);
                 return pos;
             }
         }
 
 
-        if (pos == new Vector2(-666, -666)) Debug.Log("Failed to find below");
-        Debug.Log(pos);
+        if (pos == new Vector2Int(-666, -666)) Debug.Log("Failed to find below");
+        //Debug.Log(pos);
         return pos;
     }
 
-    private Vector2 FindEnd(Vector2 startCode)
+    private Vector2Int FindEnd(Vector2Int startCode)
     {
-        int x = (int)startCode.x;
-        int y = (int)startCode.y;
+        int x = startCode.x;
+        int y = startCode.y;
         int counter = 0;
         bool found = false;
         while (!found)
@@ -214,7 +210,7 @@ public class ProcessScreenshot : MonoBehaviour
             }
             counter++;
         }
-        Vector2 end = new Vector2(x, counter - 1);
+        Vector2Int end = new Vector2Int (x, counter - 1);
         return end;
     }
 
