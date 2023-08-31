@@ -113,7 +113,7 @@ public class ProcessScreenshot : MonoBehaviour
         _startOfCode = FindStart();
         _startOfBelowStart = FindBelowStart(_startOfCode);
         _endOfCode = FindEnd(_startOfCode);
-        Debug.Log(_endOfCode);
+        //Debug.Log(_endOfCode);
 
 
         if (!succesful) return;
