@@ -57,7 +57,7 @@ public class DecodeScreenshot : MonoBehaviour
 
     private Vector2Int CalculateCoords(int count, Vector2Int startPos, int h, int w)
     {
-        Vector2Int val = new Vector2Int(0, 0);
+        Vector2Int val;
         int line = Mathf.FloorToInt(Mathf.Sqrt(count));
         int yCoord = startPos.y - line * h;
         int posInLine = count - line * line;

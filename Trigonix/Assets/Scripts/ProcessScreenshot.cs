@@ -9,6 +9,7 @@ public class ProcessScreenshot : MonoBehaviour
 
     //PROBLEM: ENCODE: Debug.Log(switchedColors);
     [SerializeField] private DecodeScreenshot _decScreen;
+    [SerializeField] private float _thresholdColor;
     private int _pixelStepBelow = 0;
     private int _pixelStepRight = 0;
     private Vector2Int _startOfCode;
@@ -75,7 +76,7 @@ public class ProcessScreenshot : MonoBehaviour
             for (int j = 0; j < 1080; j++)
             {
                 float col = _tex.GetPixel(i, j).grayscale;
-                if (col > 0.01f) _tex.SetPixel(i, j, Color.white); //thresholding
+                if (col > _thresholdColor) _tex.SetPixel(i, j, Color.white); //thresholding
                 else _tex.SetPixel(i, j, Color.black);
             }
         }
@@ -119,10 +120,10 @@ public class ProcessScreenshot : MonoBehaviour
         if (!succesful) return;
 
         _pixelStepBelow = (int)(_startOfCode.y - _startOfBelowStart.y);
-        Debug.Log(_pixelStepBelow);
+        Debug.Log("height triangle " + _pixelStepBelow);
         Vector2Int endMiddleOfFirstTriangle = new Vector2Int(_startOfCode.x, _startOfCode.y - _pixelStepBelow);
         _pixelStepRight = FindWidth(endMiddleOfFirstTriangle);
-        Debug.Log(_pixelStepRight);
+        Debug.Log("width triangle " + _pixelStepRight);
 
         //Vector2Int centerOfThirdTriangle = new Vector2Int(_startOfCode.x, (int)(_startOfCode.y - _pixelStepBelow * 1.5f));
         //Debug.Log(_startOfCode);
