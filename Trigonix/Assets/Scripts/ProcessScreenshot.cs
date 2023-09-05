@@ -185,6 +185,7 @@ public class ProcessScreenshot : MonoBehaviour
             }
             if ((_texBnW.GetPixel(x, j) == Color.black) && switchedColors)
             {
+                //this needs something
                 pos = new Vector2Int(x, j);
                 //Debug.Log(pos);
                 return pos;

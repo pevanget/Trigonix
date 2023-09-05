@@ -26,8 +26,8 @@ public class DecodeScreenshot : MonoBehaviour
     public void StartDecoding(Texture2D tex, Vector2Int startOfCode, Vector2Int endOfCode, int height, int width)
     {
         _tex = tex;
-        height++;
-        height++;
+        
+        //height++;
         //SaveSpecs(tex, startOfCode, endOfCode, height, width);
         startOfCode = new Vector2Int(startOfCode.x, startOfCode.y - height / 2);
         _currentPosition = startOfCode;
@@ -43,7 +43,7 @@ public class DecodeScreenshot : MonoBehaviour
             else
             {
                 _currentPosition = CalculateCoords(counter, startOfCode, height, width);
-                _tex.SetPixel(_currentPosition.x, _currentPosition.y, Color.blue);
+                if (_currentPosition.y > endOfCode.y) _tex.SetPixel(_currentPosition.x, _currentPosition.y, Color.blue);
             }
             counter++;
 
