@@ -3224,7 +3224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _decScreen: {fileID: 994389637}
-  _thresholdColor: 0.5
+  _thresholdColor: 0.01
 --- !u!4 &994389636
 Transform:
   m_ObjectHideFlags: 0

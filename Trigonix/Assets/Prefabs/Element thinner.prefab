@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1739720390334428214}
   - component: {fileID: 783136013245128240}
   m_Layer: 0
-  m_Name: Element 1
+  m_Name: Element thinner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
