@@ -31,6 +31,8 @@ public class ProcessScreenshot : MonoBehaviour
     {
         LoadScreenshot();
         ThresholdScreenshot();
+        
+        
         FindSpecs();
 
         DecodeScreenshot();
@@ -111,13 +113,15 @@ public class ProcessScreenshot : MonoBehaviour
             Debug.Log("BnW Screenshot found on build");
         }
         else Debug.Log("No BnW screenshot to process was found");
+
+        if (!succesful) return;
+
         _startOfCode = FindStart();
         _startOfBelowStart = FindBelowStart(_startOfCode);
         _endOfCode = FindEnd(_startOfCode);
         //Debug.Log(_endOfCode);
 
 
-        if (!succesful) return;
 
         _pixelStepBelow = (int)(_startOfCode.y - _startOfBelowStart.y);
         Debug.Log("height triangle " + _pixelStepBelow);
