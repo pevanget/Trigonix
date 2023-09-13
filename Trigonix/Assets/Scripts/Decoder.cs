@@ -93,7 +93,7 @@ public class Decoder : MonoBehaviour
         }
     }
 
-    private char DecodeColor(Color col)
+    public char DecodeColor(Color col)
     {
         float red = col.r * (Mathf.Pow(2,_redDepth)-1);
         float green = col.g * (Mathf.Pow(2, _greenDepth) - 1);

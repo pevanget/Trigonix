@@ -42,10 +42,12 @@ public class ProcessScreenshot : MonoBehaviour
 
         FindSpecs();
         FindCoords();
+        //ValidateCoords();
 
-        ValidateCoords();
 
-        //DecodeScreenshot();
+
+
+        DecodeScreenshot();
     }
 
     private void ValidateCoords()
@@ -249,10 +251,10 @@ public class ProcessScreenshot : MonoBehaviour
 
     }
 
-    //private void DecodeScreenshot()
-    //{
-    //    _decScreen.StartDecoding(_tex, _startOfCode, _endOfCode, _pixelStepBelow, _pixelStepRight);
-    //}
+    private void DecodeScreenshot()
+    {
+        _decScreen.StartDecoding(_coordinatesOfTriangles);
+    }
 
     private void LoadScreenshot()
     {
