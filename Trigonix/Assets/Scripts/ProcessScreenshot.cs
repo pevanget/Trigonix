@@ -43,10 +43,23 @@ public class ProcessScreenshot : MonoBehaviour
         FindSpecs();
         FindCoords();
 
+        ValidateCoords();
+
         //DecodeScreenshot();
     }
 
-
+    private void ValidateCoords()
+    {
+        LoadScreenshot();
+        for (int i = 0; i < _coordinatesOfTriangles.Count; i++)
+        {
+            Debug.Log(_coordinatesOfTriangles[i]);
+            Debug.Log(_tex.GetPixel(_coordinatesOfTriangles[i].x, _coordinatesOfTriangles[i].y));
+        }
+        //byte[] bytes = _tex.EncodeToPNG();
+        //if (Directory.Exists(Application.dataPath + "/../Screenshots")) File.WriteAllBytes(Application.dataPath + "/../Screenshots/SavedScreenBlueDotsAAA.png", bytes);
+        //Debug.Log(_coordinatesOfTriangles.Count);
+    }
     private void FindCoords()
     {
         FindCoordsOfLinesCentered();
@@ -105,7 +118,7 @@ public class ProcessScreenshot : MonoBehaviour
     private void FindCoordsInLines()
     {
         List<string> L = new List<string>(new string[10]);
-        int totalNumberOfElements = (_linesCount + 1) * (_linesCount + 1);
+        int totalNumberOfElements = _linesCount * _linesCount;
         _coordinatesOfTriangles = new List<Vector2Int>(new Vector2Int[totalNumberOfElements]);
         for (int currentLine = 0; currentLine < _linesCount; currentLine++)
         {
@@ -115,14 +128,18 @@ public class ProcessScreenshot : MonoBehaviour
 
     private void FindCoordsInLine(int line)
     {
+        //if (line == 0) return;
         int blackLinesToEncounter = line;
         Vector2Int currentPosition = _coordinatesOfLinesCentered[line];
         Vector2Int firstWhitePixelInTriangle = new Vector2Int(-1, -1);
         Vector2Int lastWhitePixelInTriangle = new Vector2Int(-1, -1);
         Vector2Int thisTriangleCoordsCentered = new Vector2Int(-1, -1);
         int lineIndexStart = line * (line + 1); //0=0 1=2 2=6 3=12 4=20
+        //Debug.Log(line);
+        //Debug.Log(lineIndexStart);
 
-        Debug.Log(_coordinatesOfTriangles.Count);
+
+        //Debug.Log(_coordinatesOfTriangles.Count);
         _coordinatesOfTriangles[lineIndexStart] = currentPosition;
         
         //GO LEFT
@@ -147,9 +164,15 @@ public class ProcessScreenshot : MonoBehaviour
                         currentPosition = (firstWhitePixelInTriangle + lastWhitePixelInTriangle)/ 2;
                         countTriangles++;
 
+                        //Debug.Log(lineIndexStart);
+                        //Debug.Log(countTriangles);
+
                         int index = lineIndexStart - countTriangles;
+                        //Debug.Log("index " +index);
                         _coordinatesOfTriangles[index] = currentPosition;
-                        
+                        //Debug.Log(_coordinatesOfTriangles[index]);
+
+
                         alreadyFoundStart = false;
                         alreadyFoundBlack = false;
 
@@ -193,8 +216,8 @@ public class ProcessScreenshot : MonoBehaviour
                         lastWhitePixelInTriangle = new Vector2Int(currentPosition.x - 1, currentPosition.y);
                         currentPosition = (firstWhitePixelInTriangle + lastWhitePixelInTriangle) / 2;
                         countTriangles++;
-
                         int index = lineIndexStart + countTriangles;
+
                         _coordinatesOfTriangles[index] = currentPosition;
 
                         alreadyFoundStart = false;
@@ -226,10 +249,10 @@ public class ProcessScreenshot : MonoBehaviour
 
     }
 
-    private void DecodeScreenshot()
-    {
-        _decScreen.StartDecoding(_tex, _startOfCode, _endOfCode, _pixelStepBelow, _pixelStepRight);
-    }
+    //private void DecodeScreenshot()
+    //{
+    //    _decScreen.StartDecoding(_tex, _startOfCode, _endOfCode, _pixelStepBelow, _pixelStepRight);
+    //}
 
     private void LoadScreenshot()
     {
@@ -259,16 +282,17 @@ public class ProcessScreenshot : MonoBehaviour
 
     private void ThresholdScreenshot()
     {
+        Texture2D tempTex = _tex;
         for (int i = 0; i < 1920; i++)
         {
             for (int j = 0; j < 1080; j++)
             {
-                float col = _tex.GetPixel(i, j).grayscale;
-                if (col > _thresholdColor) _tex.SetPixel(i, j, Color.white); //thresholding
-                else _tex.SetPixel(i, j, Color.black);
+                float col = tempTex.GetPixel(i, j).grayscale;
+                if (col > _thresholdColor) tempTex.SetPixel(i, j, Color.white); //thresholding
+                else tempTex.SetPixel(i, j, Color.black);
             }
         }
-        byte[] bytes = _tex.EncodeToPNG();
+        byte[] bytes = tempTex.EncodeToPNG();
         if (Directory.Exists(_pathForEditor)) File.WriteAllBytes(_pathForEditor + "/SavedScreenBlackAndWhite.png", bytes);
         if (Directory.Exists(_pathForBuild)) File.WriteAllBytes(_pathForBuild + Path.AltDirectorySeparatorChar + "SavedScreenBlackAndWhite.png", bytes);
 
