@@ -40,4 +40,10 @@ public class Mask3 : MaskBase
             //Debug.Log(SR.color);
         }
     }
+
+    public override void UnmaskElement(int i, Color color)
+    {
+        color = new Color(color.b, color.r, color.g);
+        //Debug.Log(color);
+    }
 }

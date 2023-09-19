@@ -35,7 +35,13 @@ public class Mask4 : MaskBase
         {
             SpriteRenderer SR = element.GetComponent<SpriteRenderer>();
             SR.color = new Color(SR.color.g, SR.color.b, SR.color.r);
-            Debug.Log(SR.color);
+            //Debug.Log(SR.color);
         }
+    }
+
+    public override void UnmaskElement(int i, Color color)
+    {
+        color = new Color(color.g, color.b, color.r);
+        //Debug.Log(color);
     }
 }

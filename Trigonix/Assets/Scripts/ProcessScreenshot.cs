@@ -336,10 +336,10 @@ public class ProcessScreenshot : MonoBehaviour
 
 
         _pixelStepBelow = (int)(_startOfCode.y - _startOfBelowStart.y);
-        Debug.Log("height triangle " + _pixelStepBelow);
+        //Debug.Log("height triangle " + _pixelStepBelow);
         Vector2Int endMiddleOfFirstTriangle = new Vector2Int(_startOfCode.x, _startOfCode.y - _pixelStepBelow);
         _pixelStepRight = FindWidth(endMiddleOfFirstTriangle);
-        Debug.Log("width triangle " + _pixelStepRight);
+        //Debug.Log("width triangle " + _pixelStepRight);
 
         //Vector2Int centerOfThirdTriangle = new Vector2Int(_startOfCode.x, (int)(_startOfCode.y - _pixelStepBelow * 1.5f));
         //Debug.Log(_startOfCode);

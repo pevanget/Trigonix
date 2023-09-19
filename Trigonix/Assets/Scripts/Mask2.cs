@@ -49,4 +49,10 @@ public class Mask2 : MaskBase
             SR.color = new Color(SR.color.r, SR.color.b, SR.color.g);
         }
     }
+
+    public override void UnmaskElement(int i, Color color)
+    {
+        color = new Color(color.r, color.b, color.g);
+        //Debug.Log(color);
+    }
 }

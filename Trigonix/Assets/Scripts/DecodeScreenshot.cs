@@ -2,16 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.UI;
+using TMPro;
 using System;
 
 public class DecodeScreenshot : MonoBehaviour
 {
     [SerializeField] private Decoder _decoder;
+    [SerializeField] private TMP_InputField _decodedTextDisplayed;
+
     private Texture2D _tex;
     private Vector2Int _currentPosition;
     private string _pathForEditor;
     private string _pathForBuild;
     private byte[] _fileData; //might need to reset
+    private string _decodedString;
 
     private void Start()
     {
@@ -24,14 +29,17 @@ public class DecodeScreenshot : MonoBehaviour
     public void StartDecoding(List<Vector2Int> coordsOfTriangles)
     {
         //Debug.Log(coordsOfTriangles.Count);
+        _decodedString = null;
         LoadScreenshot();
         for (int i = 0; i < coordsOfTriangles.Count; i++)
         {
             char a =_decoder.DecodeColor(_tex.GetPixel(coordsOfTriangles[i].x, coordsOfTriangles[i].y));
-            Debug.Log(a);
-            Debug.Log(coordsOfTriangles[i]);
-            Debug.Log(_tex.GetPixel(coordsOfTriangles[i].x, coordsOfTriangles[i].y));
+            _decodedString += a;
+            //Debug.Log(a);
+            //Debug.Log(coordsOfTriangles[i]);
+            //Debug.Log(_tex.GetPixel(coordsOfTriangles[i].x, coordsOfTriangles[i].y));
         }
+        _decodedTextDisplayed.text = _decodedString;
     }
 
     private void LoadScreenshot()

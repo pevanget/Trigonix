@@ -16,7 +16,7 @@ public class Decoder : MonoBehaviour
     private int _redMultiplier, _greenMultiplier, _blueMultiplier;
 
 
-  
+
 
     public void StartDecode()
     {
@@ -28,6 +28,8 @@ public class Decoder : MonoBehaviour
     {
         Transform parentMasked = _masker.GetBestParentMasked();
         Transform[] elementsMasked = new Transform[parentMasked.childCount];
+
+        Debug.Log("hello");
 
 
         for (int i = 0; i < elementsMasked.Length; i++)
@@ -45,7 +47,8 @@ public class Decoder : MonoBehaviour
 
         for (int i = 1; i < elementsMasked.Length; i++)
         {
-            characters[i-1] = DecodeElement(elementsMasked[i]);
+            characters[i - 1] = DecodeElement(elementsMasked[i]);
+            //Debug.Log("helo");
         }
         string str = new string(characters);
         _decodedText.text = str;
@@ -56,15 +59,24 @@ public class Decoder : MonoBehaviour
     {
         int idOfMask = -1;
         SpriteRenderer SR = elementOfMask.GetComponent<SpriteRenderer>();
-        for (int i = 0; i < _masker.GetNumberOfMasks(); i++)
-        {
-            if (SR.color == _masker.GetMask(i).GetColorOfMask(i))
-            {
-                idOfMask = i;
-            }
-        }
+        Color maskColor = SR.color;
+        idOfMask = FindMask(maskColor);
+        
 
         return idOfMask;
+    }
+
+    public int FindMask(Color colorOfMask)
+    {
+        int maskID = -1;
+        for (int i = 0; i < _masker.GetNumberOfMasks(); i++)
+        {
+            if (colorOfMask == _masker.GetMask(i).GetColorOfMask(i))
+            {
+                maskID = i;
+            }
+        }
+        return maskID;
     }
 
 
@@ -95,11 +107,14 @@ public class Decoder : MonoBehaviour
 
     public char DecodeColor(Color col)
     {
-        float red = col.r * (Mathf.Pow(2,_redDepth)-1);
+        float red = col.r * (Mathf.Pow(2, _redDepth) - 1);
         float green = col.g * (Mathf.Pow(2, _greenDepth) - 1);
         float blue = col.b * (Mathf.Pow(2, _blueDepth) - 1);
         float num = red * _redMultiplier + green * _greenMultiplier + blue * _blueMultiplier;
-        int numm = (int)num;
+        //Debug.Log(num);
+        //int numm = (int)num;
+        int numm = Mathf.RoundToInt(num);
+        //Debug.Log(numm);
         char myChar;
         myChar = (char)numm;
         return myChar;
@@ -110,8 +125,8 @@ public class Decoder : MonoBehaviour
         _redDepth = r;
         _greenDepth = g;
         _blueDepth = b;
-        _redMultiplier = (int) Mathf.Pow(2, g+b);
-        _greenMultiplier = (int) Mathf.Pow(2, b);
+        _redMultiplier = (int)Mathf.Pow(2, g + b);
+        _greenMultiplier = (int)Mathf.Pow(2, b);
         _blueMultiplier = 1;
     }
 }
