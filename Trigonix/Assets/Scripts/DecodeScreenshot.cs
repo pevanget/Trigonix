@@ -9,6 +9,7 @@ using System;
 public class DecodeScreenshot : MonoBehaviour
 {
     [SerializeField] private Decoder _decoder;
+    [SerializeField] private Masker _masker;
     [SerializeField] private TMP_InputField _decodedTextDisplayed;
 
     private Texture2D _tex;
@@ -31,9 +32,16 @@ public class DecodeScreenshot : MonoBehaviour
         //Debug.Log(coordsOfTriangles.Count);
         _decodedString = null;
         LoadScreenshot();
-        for (int i = 0; i < coordsOfTriangles.Count; i++)
+        int maskID = _decoder.FindMask(_tex.GetPixel(coordsOfTriangles[0].x, coordsOfTriangles[0].y));
+        Debug.Log(maskID);
+        for (int i = 1; i < coordsOfTriangles.Count; i++)
         {
-            char a =_decoder.DecodeColor(_tex.GetPixel(coordsOfTriangles[i].x, coordsOfTriangles[i].y));
+            Color colorToUnmask = _tex.GetPixel(coordsOfTriangles[i].x, coordsOfTriangles[i].y);
+            //Debug.Log(colorToUnmask);
+            Color colorUnmasked = _masker.GetMask(maskID).UnmaskElement(i, colorToUnmask);
+            //Debug.Log(colorUnmasked);
+            char a =_decoder.DecodeColor(colorUnmasked);
+            //Debug.Log(a);
             _decodedString += a;
             //Debug.Log(a);
             //Debug.Log(coordsOfTriangles[i]);

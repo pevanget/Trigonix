@@ -41,9 +41,15 @@ public class Mask3 : MaskBase
         }
     }
 
-    public override void UnmaskElement(int i, Color color)
+    public override Color UnmaskElement(int i, Color color)
     {
-        color = new Color(color.b, color.r, color.g);
+        if (i % 2 == 0)
+        {
+            color = new Color(color.b, color.r, color.g);
+            return color;
+        }
+        else return color;
+
         //Debug.Log(color);
     }
 }

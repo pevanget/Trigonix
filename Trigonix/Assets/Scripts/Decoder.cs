@@ -61,21 +61,29 @@ public class Decoder : MonoBehaviour
         SpriteRenderer SR = elementOfMask.GetComponent<SpriteRenderer>();
         Color maskColor = SR.color;
         idOfMask = FindMask(maskColor);
-        
+
+        if (idOfMask < 0) Debug.LogError("no mask was found");
+
 
         return idOfMask;
     }
 
-    public int FindMask(Color colorOfMask)
+    public int FindMask(Color colorOfThisMask)
     {
         int maskID = -1;
+        Debug.Log(colorOfThisMask);
         for (int i = 0; i < _masker.GetNumberOfMasks(); i++)
         {
-            if (colorOfMask == _masker.GetMask(i).GetColorOfMask(i))
+            Color colorOfMask = _masker.GetMask(i).GetColorOfMask(i);
+            if (colorOfThisMask == colorOfMask)
             {
                 maskID = i;
             }
+            //Color a = colorOfThisMask - colorOfMask;
+            //Debug.Log(colorOfMask);
+            //Debug.Log(a);
         }
+        if (maskID < 0) Debug.LogError("no mask was found");
         return maskID;
     }
 

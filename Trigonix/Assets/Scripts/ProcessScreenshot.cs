@@ -111,7 +111,7 @@ public class ProcessScreenshot : MonoBehaviour
             currentPosition = new Vector2Int(currentPosition.x, currentPosition.y - 1);
 
         }
-        Debug.Log(linesCount);
+        //Debug.Log(linesCount);
         _linesCount = linesCount;
         byte[] bytes = _texBnWWithSamplingPoints.EncodeToPNG();
         if (Directory.Exists(Application.dataPath + "/../Screenshots")) File.WriteAllBytes(Application.dataPath + "/../Screenshots/SavedScreenBlueDotsA.png", bytes);

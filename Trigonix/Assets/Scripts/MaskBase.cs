@@ -140,8 +140,8 @@ public abstract class MaskBase : MonoBehaviour
     public virtual void UnmaskElement(int i, Transform element)
     { }
     
-    public virtual void UnmaskElement(int i, Color color)
-    { }
+    public virtual Color UnmaskElement(int i, Color color)
+    { return color; }
 
 
 

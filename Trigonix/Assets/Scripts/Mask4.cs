@@ -32,16 +32,22 @@ public class Mask4 : MaskBase
     public override void UnmaskElement(int i, Transform element)
     {
         //if (i % 2 == 0)
-        {
+        //{
             SpriteRenderer SR = element.GetComponent<SpriteRenderer>();
             SR.color = new Color(SR.color.g, SR.color.b, SR.color.r);
             //Debug.Log(SR.color);
-        }
+        //}
     }
 
-    public override void UnmaskElement(int i, Color color)
+    public override Color UnmaskElement(int i, Color color)
     {
-        color = new Color(color.g, color.b, color.r);
-        //Debug.Log(color);
+    //    if (i % 2 == 0)
+    //    {
+            color = new Color(color.g, color.b, color.r);
+            return color;
+            //Debug.Log(color);
+        //}
+        //else
+        //return color;
     }
 }
