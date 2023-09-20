@@ -15,13 +15,13 @@ public class MoveCamera : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.F9)) _lockCamera = !_lockCamera;
-        if (_lockCamera) return;
         x = Input.GetAxis("Horizontal");
         y = Input.GetAxis("Vertical");
     }
 
     private void LateUpdate()
     {
+        if (_lockCamera) return;
         transform.Translate(new Vector3(x * _cameraSpeed, y * _cameraSpeed) * Time.deltaTime);
     }
 }
