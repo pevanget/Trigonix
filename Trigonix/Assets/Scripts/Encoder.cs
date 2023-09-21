@@ -162,7 +162,8 @@ public class Encoder : MonoBehaviour
                     HandleFlipElement(element, j);
                     SpriteRenderer SR = element.GetComponent<SpriteRenderer>();
                     if (_messagePointer < _stringToEncode.Length) SR.color = _asciiToElement.PaintElement(_encodedBytesASCII[_messagePointer]);
-                    else SR.color = Color.gray;
+                    else SR.color = Color.white;
+                    //else SR.color = Color.gray;
                     _elementsCounter++;
                     _messagePointer++;
                 }

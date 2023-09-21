@@ -40,7 +40,7 @@ public class DecodeScreenshot : MonoBehaviour
             //Debug.Log(colorToUnmask);
             Color colorUnmasked = _masker.GetMask(maskID).UnmaskElement(i, colorToUnmask);
             //Debug.Log(colorUnmasked);
-            char a =_decoder.DecodeColor(colorUnmasked);
+            char? a =_decoder.DecodeColor(colorUnmasked);
             //Debug.Log(a);
             _decodedString += a;
             //Debug.Log(a);

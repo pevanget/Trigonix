@@ -43,14 +43,15 @@ public class Decoder : MonoBehaviour
             _masker.GetMask(maskID).UnmaskElement(i, elementsMasked[i]);
         }
 
-        char[] characters = new char[elementsMasked.Length];
-
+        char?[] characters = new char?[elementsMasked.Length];
+        string str = null;
         for (int i = 1; i < elementsMasked.Length; i++)
         {
             characters[i - 1] = DecodeElement(elementsMasked[i]);
             //Debug.Log("helo");
+            str += characters[i - 1];
         }
-        string str = new string(characters);
+        //string str = new string(characters);
         _decodedText.text = str;
         //Transform elementsMasked = 
     }
@@ -92,18 +93,20 @@ public class Decoder : MonoBehaviour
     {
         Debug.Log("Starting Unmasked Decoding");
         Transform[] elements = _encoder.GetElementsTransforms();
-        char[] characters = new char[elements.Length];
+        char?[] characters = new char?[elements.Length];
+        string str = null;
 
         for (int i = 0; i < elements.Length; i++)
         {
             characters[i] = DecodeElement(elements[i]);
+            str += characters[i];
         }
-        string str = new string(characters);
+        //string str = new string(characters);
         _decodedText.text = str;
         //Debug.Log(str); //show in ui!
     }
 
-    private char DecodeElement(Transform el)
+    private char? DecodeElement(Transform el)
     {
         SpriteRenderer SR = el.GetComponent<SpriteRenderer>();
         if (SR == null) return '0';
@@ -113,7 +116,7 @@ public class Decoder : MonoBehaviour
         }
     }
 
-    public char DecodeColor(Color col)
+    public char? DecodeColor(Color col)
     {
         float red = col.r * (Mathf.Pow(2, _redDepth) - 1);
         float green = col.g * (Mathf.Pow(2, _greenDepth) - 1);
@@ -123,6 +126,7 @@ public class Decoder : MonoBehaviour
         //int numm = (int)num;
         int numm = Mathf.RoundToInt(num);
         //Debug.Log(numm);
+        if (numm == 127) return null;
         char myChar;
         myChar = (char)numm;
         return myChar;
