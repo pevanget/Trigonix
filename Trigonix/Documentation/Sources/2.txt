@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Code
+https://en.wikipedia.org/wiki/Character_encoding
+https://en.wikipedia.org/wiki/ASCII

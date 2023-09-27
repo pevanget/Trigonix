@@ -29,7 +29,6 @@ public class Decoder : MonoBehaviour
         Transform parentMasked = _masker.GetBestParentMasked();
         Transform[] elementsMasked = new Transform[parentMasked.childCount];
 
-        Debug.Log("hello");
 
 
         for (int i = 0; i < elementsMasked.Length; i++)
@@ -48,7 +47,6 @@ public class Decoder : MonoBehaviour
         for (int i = 1; i < elementsMasked.Length; i++)
         {
             characters[i - 1] = DecodeElement(elementsMasked[i]);
-            //Debug.Log("helo");
             str += characters[i - 1];
         }
         //string str = new string(characters);
