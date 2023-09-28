@@ -1,2 +1,5 @@
 ascii table
 https://www.ascii-code.com/ASCII
+
+rgb 256 xrwmata
+https://en.wikipedia.org/wiki/8-bit_color
