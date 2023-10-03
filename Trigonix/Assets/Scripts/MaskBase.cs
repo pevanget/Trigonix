@@ -5,7 +5,7 @@ public abstract class MaskBase : MonoBehaviour
     public enum MaskName { mask1, mask2, mask3, mask4 };
     public MaskName maskName;
     private float _thresholdSimilarPenalty = 0.5f;
-    private float _thresholdDifferentReward = 0.75f;
+    private float _thresholdDifferentReward = 1f;
     protected Color[] _maskColors = new Color[MaskName.GetNames(typeof(MaskName)).Length];
     //protected int[] _score = new int[MaskName.GetNames(typeof(MaskName)).Length];
     protected Color _thisMaskColor;
