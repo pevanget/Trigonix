@@ -90,6 +90,7 @@ public class Decoder : MonoBehaviour
     private void DecodeUnmasked()
     {
         Debug.Log("Starting Unmasked Decoding");
+        
         Transform[] elements = _encoder.GetElementsTransforms();
         char?[] characters = new char?[elements.Length];
         string str = null;
@@ -99,9 +100,7 @@ public class Decoder : MonoBehaviour
             characters[i] = DecodeElement(elements[i]);
             str += characters[i];
         }
-        //string str = new string(characters);
         _decodedText.text = str;
-        //Debug.Log(str); //show in ui!
     }
 
     private char? DecodeElement(Transform el)
@@ -119,12 +118,13 @@ public class Decoder : MonoBehaviour
         float red = col.r * (Mathf.Pow(2, _redDepth) - 1);
         float green = col.g * (Mathf.Pow(2, _greenDepth) - 1);
         float blue = col.b * (Mathf.Pow(2, _blueDepth) - 1);
+
         float num = red * _redMultiplier + green * _greenMultiplier + blue * _blueMultiplier;
-        //Debug.Log(num);
-        //int numm = (int)num;
+        
         int numm = Mathf.RoundToInt(num);
-        //Debug.Log(numm);
+        
         if (numm == 127) return null;
+        
         char myChar;
         myChar = (char)numm;
         return myChar;
