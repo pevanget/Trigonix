@@ -23,7 +23,7 @@ public class Encoder : MonoBehaviour
     /// max 30 lines
     /// max 900 elements
     /// </summary>
-    
+
     [SerializeField] Vector2 _firstElementPosition;
     [SerializeField] private GameObject _UINumberOfElements;
     [SerializeField] private GameObject _elementTriangle;
@@ -57,7 +57,7 @@ public class Encoder : MonoBehaviour
     private int _totalMaxElements = 900;
     private int _maxLines = 30;
     private TMP_Text _UINumberOfElementsText;
-    
+
 
     void Start()
     {
@@ -79,7 +79,7 @@ public class Encoder : MonoBehaviour
     {
         if (_currentParent != null) Destroy(_currentParent);
     }
-    
+
     public void StartEncode()
     {
         GetStringToEncode();
@@ -110,7 +110,7 @@ public class Encoder : MonoBehaviour
         _addDistortionButton.interactable = true;
         _screenshotButton.interactable = true;
     }
-    
+
     private bool CheckSizeOfCode(int elementsNeeded)
     {
         if (elementsNeeded <= _totalMaxElements)
@@ -137,7 +137,7 @@ public class Encoder : MonoBehaviour
         _elementsCounter++;
     }
 
-    
+
     public void Encode()
     {
         _attemptsGenerate++;
@@ -156,7 +156,7 @@ public class Encoder : MonoBehaviour
                 }
                 else
                 {
-                    _positionsOfElements[_elementsCounter].x = _firstElementPosition.x - i * _sizeElementX / 2 + _sizeElementX * j / 2;
+                    _positionsOfElements[_elementsCounter].x = _firstElementPosition.x + (j - i) * _sizeElementX / 2;
                     _positionsOfElements[_elementsCounter].y = _firstElementPosition.y - i * _sizeElementY;
                     GameObject element = Instantiate(_elementTriangle, _positionsOfElements[_elementsCounter], Quaternion.identity, _parentObject.transform);
                     HandleFlipElement(element, j);
