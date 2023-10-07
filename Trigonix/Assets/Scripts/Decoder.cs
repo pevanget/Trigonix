@@ -115,6 +115,7 @@ public class Decoder : MonoBehaviour
 
     public char? DecodeColor(Color col)
     {
+        Debug.Log(col);
         float red = col.r * (Mathf.Pow(2, _redDepth) - 1);
         float green = col.g * (Mathf.Pow(2, _greenDepth) - 1);
         float blue = col.b * (Mathf.Pow(2, _blueDepth) - 1);
