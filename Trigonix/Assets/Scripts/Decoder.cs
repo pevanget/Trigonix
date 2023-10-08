@@ -70,7 +70,7 @@ public class Decoder : MonoBehaviour
     public int FindMask(Color colorOfThisMask)
     {
         int maskID = -1;
-        Debug.Log(colorOfThisMask);
+        //Debug.Log(colorOfThisMask);
         for (int i = 0; i < _masker.GetNumberOfMasks(); i++)
         {
             Color colorOfMask = _masker.GetMask(i).GetColorOfMask(i);
@@ -95,7 +95,7 @@ public class Decoder : MonoBehaviour
         char?[] characters = new char?[elements.Length];
         string str = null;
 
-        for (int i = 0; i < elements.Length; i++)
+        for (int i = 1; i < elements.Length; i++)
         {
             characters[i] = DecodeElement(elements[i]);
             str += characters[i];
@@ -115,7 +115,7 @@ public class Decoder : MonoBehaviour
 
     public char? DecodeColor(Color col)
     {
-        Debug.Log(col);
+        //Debug.Log(col);
         float red = col.r * (Mathf.Pow(2, _redDepth) - 1);
         float green = col.g * (Mathf.Pow(2, _greenDepth) - 1);
         float blue = col.b * (Mathf.Pow(2, _blueDepth) - 1);
