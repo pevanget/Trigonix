@@ -50,18 +50,18 @@ public class ProcessScreenshot : MonoBehaviour
         DecodeScreenshot();
     }
 
-    private void ValidateCoords()
-    {
-        LoadScreenshot();
-        for (int i = 0; i < _coordinatesOfTriangles.Count; i++)
-        {
-            Debug.Log(_coordinatesOfTriangles[i]);
-            Debug.Log(_tex.GetPixel(_coordinatesOfTriangles[i].x, _coordinatesOfTriangles[i].y));
-        }
-        //byte[] bytes = _tex.EncodeToPNG();
-        //if (Directory.Exists(Application.dataPath + "/../Screenshots")) File.WriteAllBytes(Application.dataPath + "/../Screenshots/SavedScreenBlueDotsAAA.png", bytes);
-        //Debug.Log(_coordinatesOfTriangles.Count);
-    }
+    //private void ValidateCoords()
+    //{
+    //    LoadScreenshot();
+    //    for (int i = 0; i < _coordinatesOfTriangles.Count; i++)
+    //    {
+    //        Debug.Log(_coordinatesOfTriangles[i]);
+    //        Debug.Log(_tex.GetPixel(_coordinatesOfTriangles[i].x, _coordinatesOfTriangles[i].y));
+    //    }
+    //    //byte[] bytes = _tex.EncodeToPNG();
+    //    //if (Directory.Exists(Application.dataPath + "/../Screenshots")) File.WriteAllBytes(Application.dataPath + "/../Screenshots/SavedScreenBlueDotsAAA.png", bytes);
+    //    //Debug.Log(_coordinatesOfTriangles.Count);
+    //}
     private void FindCoords()
     {
         FindCoordsOfLinesCentered();

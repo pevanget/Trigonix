@@ -33,7 +33,6 @@ public class DecodeScreenshot : MonoBehaviour
         _decodedString = null;
         LoadScreenshot();
         int maskID = _decoder.FindMask(_tex.GetPixel(coordsOfTriangles[0].x, coordsOfTriangles[0].y));
-        Debug.Log(maskID);
         for (int i = 1; i < coordsOfTriangles.Count; i++)
         {
             Color colorToUnmask = _tex.GetPixel(coordsOfTriangles[i].x, coordsOfTriangles[i].y);
