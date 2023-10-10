@@ -246,10 +246,6 @@ public class ProcessScreenshot : MonoBehaviour
 
     }
 
-    private void GoLeft()
-    {
-
-    }
 
     private void DecodeScreenshot()
     {
