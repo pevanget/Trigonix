@@ -21,6 +21,7 @@ public class ProcessScreenshot : MonoBehaviour
     private string _pathForEditor;
     private string _pathForBuild;
     private byte[] _fileData; //might need to reset
+    private float _timeElapsed;
 
     private List<Vector2Int> _coordinatesOfLinesCentered = new List<Vector2Int>();
     private List<Vector2Int> _coordinatesOfTriangles = new List<Vector2Int>();
@@ -36,6 +37,8 @@ public class ProcessScreenshot : MonoBehaviour
 
     public void DecodeLastScreenshot()
     {
+        _timeElapsed = Time.realtimeSinceStartup;
+
         LoadScreenshot();
         ThresholdScreenshot();
 
@@ -250,6 +253,8 @@ public class ProcessScreenshot : MonoBehaviour
     private void DecodeScreenshot()
     {
         _decScreen.StartDecoding(_coordinatesOfTriangles);
+        _timeElapsed = Time.realtimeSinceStartup - _timeElapsed;
+        Debug.Log("Screenshot processed in " + _timeElapsed + " seconds.");
     }
 
     private void LoadScreenshot()
